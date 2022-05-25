@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:background="#e8d8e8"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/postMapview"
+        android:layout_width="match_parent"
+        android:layout_height="500dp">
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:id="@+id/btn_close"
+        android:background="#e8d8e8"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:text="닫기"/>
+
+
+</LinearLayout>

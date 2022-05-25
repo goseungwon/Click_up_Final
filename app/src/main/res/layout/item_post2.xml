@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="125dp"
+    android:layout_height="125dp"
+    android:orientation="horizontal"
+    android:background="@drawable/borderx"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp"
+    android:layout_marginBottom="2dp"
+    android:backgroundTint="#DCDCDC">
+
+    <ImageView
+        android:id="@+id/item_post_image2"
+        android:layout_width="117dp"
+        android:layout_height="117dp"
+        android:textColor="@color/black"
+        android:layout_gravity="center"
+        android:layout_margin ="5dp" />
+
+</LinearLayout>

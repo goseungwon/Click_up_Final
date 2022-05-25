@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".PostActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#DCDCDC"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="1dp">
+
+        <TextView
+            android:id="@+id/post_read_nick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/black"
+            android:text="Nickname"
+            android:textSize="18dp"/>
+
+        <TextView
+            android:id="@+id/post_read_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textColor="@color/black"
+            android:layout_marginRight="15dp"
+            android:text="Date" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="5dp">
+
+        <ImageView
+            android:id="@+id/post_read_imageView"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+    <View style="@style/divide"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:id="@+id/post_read_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="4"
+        android:text="Contents"
+        android:textColor="@color/black"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="16dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:background="#DCDCDC"
+        android:layout_marginTop="10dp"
+        >
+
+        <ImageView
+            android:id="@+id/post_read_like"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:src="@drawable/heart_blank"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"/>
+
+        <ImageButton
+            android:id="@+id/post_read_loaction"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:background="#DCDCDC"
+            android:src="@drawable/share_loaction"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp" />
+
+        <EditText
+            android:id="@+id/edt_inputComment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="    댓글을 입력하세요."
+            android:layout_margin="5dp"
+            android:textColor="@color/black"
+            android:backgroundTint="#FFFFFF"
+            android:layout_weight="1"
+            android:background="@color/white" />
+
+        <Button
+            android:id="@+id/btn_comment_send"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="입력"
+            android:textSize="10dp"
+            android:backgroundTint="#DCDCDC"
+            android:layout_weight="2"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
+            />
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

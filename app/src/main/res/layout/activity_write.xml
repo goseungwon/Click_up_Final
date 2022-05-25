@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".WriteActivity"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/write_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:background="#ffffff"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" >
+
+        <Button
+            android:id="@+id/btnPost"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="20dp"
+            android:text="등록"
+            android:textColor="#B51DA1"
+            android:backgroundTint="#FFD9FA"/>
+        
+    </androidx.appcompat.widget.Toolbar>
+
+
+
+    <EditText
+        android:id="@+id/edtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/write_toolbar"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="25dp"
+        android:ems="10"
+        android:gravity="top"
+        android:hint="제목"
+        android:minHeight="48dp"
+        android:privateImeOptions="defaultInputmode=korean"
+        android:textColor="@color/black"
+        android:textColorHint="#8C8C8C"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp"
+        android:textColorHighlight="#ffffff"/>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/edtTitle"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="#DCDCDC"
+            android:id="@+id/UploadImg" />
+
+    </androidx.cardview.widget.CardView>
+
+
+    <EditText
+        android:id="@+id/edtContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cardView"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="25dp"
+        android:ems="10"
+        android:gravity="top"
+        android:hint="내용을 입력하세요."
+        android:textColor="@color/black"
+        android:textColorHint="#8C8C8C"
+        android:inputType="textMultiLine"
+        android:lines="10"
+        android:privateImeOptions="defaultInputmode=korean"
+        android:background="@android:color/transparent"/>
+
+
+
+
+</RelativeLayout>

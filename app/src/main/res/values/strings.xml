@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Click_up_Final</string>
+    <string name="application_name">클릭업</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

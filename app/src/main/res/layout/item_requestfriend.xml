@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:orientation="horizontal"
+    android:background="@drawable/borderx"
+    android:backgroundTint="#DCDCDC">
+
+    <ImageView
+        android:id="@+id/requestitem_imageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/requestitem_TextView"
+            android:text="Nickname"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="20dp"
+            android:gravity="end|center"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:id="@+id/request_accept"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/icon_accept"
+                android:background="#00CC00"/>
+
+            <ImageButton
+                android:id="@+id/request_reject"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/baseline_close_18"
+                android:background="#FF0000"/>
+
+        </LinearLayout>
+</LinearLayout>

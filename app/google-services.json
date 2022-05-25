@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "739591176874",
+    "project_id": "clickup-87b0d",
+    "storage_bucket": "clickup-87b0d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739591176874:android:1828f34ac5fb0dca97c6d3",
+        "android_client_info": {
+          "package_name": "com.example.click_up_final"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "739591176874-45fgb43f83qmoklsk6tb8pvtp9v4ssds.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.click_up_final",
+            "certificate_hash": "a6180705954a55976c5cf571ef9fc727eab289d6"
+          }
+        },
+        {
+          "client_id": "739591176874-98ctjkc1vednunu8p3ma147hb72einii.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMopEZsFIj9_mir0UGNvV5SxgbdJv8kUs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739591176874-98ctjkc1vednunu8p3ma147hb72einii.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

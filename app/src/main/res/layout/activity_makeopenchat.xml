@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".OpenChatMakeActivity"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/make_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        android:background="#808080"/>
+
+    <EditText
+        android:id="@+id/edtOpenchat_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="25dp"
+        android:ems="10"
+        android:gravity="top"
+        android:hint="제목"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:minHeight="48dp"
+        android:privateImeOptions="defaultInputmode=korean" />
+
+    <EditText
+        android:id="@+id/edtOpenchat_memo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edtOpenchat_title"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="25dp"
+        android:ems="10"
+        android:gravity="top"
+        android:hint="설명"
+        android:inputType="textMultiLine"
+        android:lines="3"
+        android:privateImeOptions="defaultInputmode=korean"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"/>
+
+    <TextView
+        android:id="@+id/text_explain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edtOpenchat_memo"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:gravity="center"
+        android:lines="5"
+        android:text="오픈 채팅방은 한 개만 개설할 수 있습니다."
+        android:textColor="@color/black"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/textOpenchat_latitude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_explain"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:gravity="center"
+        android:text="위도"
+        android:background="#DCDCDC"
+        android:textColor="@color/black"
+        android:textSize="17dp" />
+
+    <TextView
+        android:id="@+id/textOpenchat_longitute"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textOpenchat_latitude"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:gravity="center"
+        android:text="경도"
+        android:background="#DCDCDC"
+        android:textColor="@color/black"
+        android:textSize="17dp" />
+
+    <Button
+        android:id="@+id/btnOpenchat_make"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textOpenchat_longitute"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="25dp"
+        android:textColor="#ffffff"
+        android:text="개설하기" />
+
+</RelativeLayout>
