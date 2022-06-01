@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".UserProfileChangeActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".UserProfileChangeActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/change_toolbar"
@@ -13,58 +13,84 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
-        android:background="#808080"
+        android:background="#FFFFFF"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
+        android:theme="?attr/actionBarTheme">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="left"
+            android:src="@drawable/clickup" />
+
+        <Button
+            android:id="@+id/btnProfileChage"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="#FFD9FA"
+            android:text="변경"
+            android:textColor="#B51DA1" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/text212"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_below="@+id/change_toolbar"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="25dp"
+        android:background="@color/white"
+        android:text="프로필 사진"
+        android:textColor="@color/black" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_below="@+id/change_toolbar"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_below="@+id/text212"
         android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp">
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="25dp"
+        android:background="@color/white">
 
         <ImageView
+            android:id="@+id/imvChangeUserProfile"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:background="#DCDCDC"
-            android:id="@+id/imvChangeUserProfile"
-            />
+            android:background="@drawable/borderline" />
 
     </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/textMY"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cardView"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="25dp"
+        android:text="상태 메시지"
+        android:textColor="@color/black" />
 
     <EditText
         android:id="@+id/edtUserComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/cardView"
+        android:layout_below="@+id/textMY"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="25dp"
+        android:background="@drawable/borderline"
         android:ems="10"
         android:gravity="top"
-        android:hint="User Comment"
         android:inputType="textMultiLine"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
         android:lines="4"
-        android:privateImeOptions="defaultInputmode=korean" />
-
-    <Button
-        android:id="@+id/btnProfileChage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edtUserComment"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="25dp"
-        android:background="@drawable/loginbutton"
-        android:backgroundTint="#808080"
-        android:text="변경하기"
-        android:textColor="#ffffff" />
-
-
+        android:privateImeOptions="defaultInputmode=korean"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black" />
 
 </RelativeLayout>

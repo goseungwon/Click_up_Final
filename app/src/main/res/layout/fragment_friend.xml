@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FFFFFF"
-    tools:context=".Fragment.FriendFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".Fragment.FriendFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -28,43 +28,43 @@
         android:id="@+id/Layout_for_Search"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:orientation="horizontal"
-        android:backgroundTint="#EFEEEE"
-        android:background="@drawable/bordery"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="4dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="4dp">
+        android:background="@drawable/bordery"
+        android:backgroundTint="#EFEEEE"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/edtSearchUser"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:hint="   검색"
-            android:textColorHint="@color/search"
-            android:textColor="@color/search"
-            android:background="#EFEEEE"
-            android:textSize="14dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="6dp"
-            android:inputType="text" />
+            android:layout_weight="1"
+            android:background="#EFEEEE"
+            android:hint="   검색"
+            android:inputType="text"
+            android:textColor="@color/search"
+            android:textColorHint="@color/search"
+            android:textSize="14dp" />
 
         <ImageButton
             android:id="@+id/btnSearch"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:src="@drawable/icon_search"
             android:backgroundTint="#EFEEEE"
+            android:src="@drawable/icon_search"
             android:textSize="13dp"
             app:tint="@color/search" />
     </LinearLayout>
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_friend_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:backgroundTint="#FFFFFF"></androidx.recyclerview.widget.RecyclerView>
+        android:backgroundTint="#FFFFFF">
+    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

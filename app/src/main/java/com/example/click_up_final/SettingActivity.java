@@ -1,14 +1,11 @@
 package com.example.click_up_final;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -20,11 +17,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class SettingActivity extends AppCompatActivity {
     private FirebaseAuth auth;
-
-    private Button setting_logout, friend_request, password_reset, ask_btn, btn_test;
+    private Button setting_logout, friend_request, password_reset, ask_btn;
     private Toolbar toolbar;
-
-    private Dialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,21 +26,10 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
 
         auth = FirebaseAuth.getInstance();
-
-        dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_custom);
-
         setting_logout = (Button) findViewById(R.id.setting_logout);
         friend_request = (Button) findViewById(R.id.friend_request);
         password_reset = (Button) findViewById(R.id.password_reset);
         ask_btn = (Button) findViewById(R.id.ask_btn);
-        btn_test = (Button) findViewById(R.id.btn_test);
-
-        friend_request.setBackgroundColor(Color.rgb(220, 220, 220));
-        password_reset.setBackgroundColor(Color.rgb(220, 220, 220));
-        ask_btn.setBackgroundColor(Color.rgb(220, 220, 220));
-        btn_test.setBackgroundColor(Color.rgb(220, 220, 220));
 
         toolbar = (Toolbar) findViewById(R.id.set_toolbar);
         setSupportActionBar(toolbar);
@@ -57,7 +40,6 @@ public class SettingActivity extends AppCompatActivity {
         findViewById(R.id.friend_request).setOnClickListener(onClickListener);
         findViewById(R.id.password_reset).setOnClickListener(onClickListener);
         findViewById(R.id.ask_btn).setOnClickListener(onClickListener);
-        findViewById(R.id.btn_test).setOnClickListener(onClickListener);
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -78,10 +60,6 @@ public class SettingActivity extends AppCompatActivity {
 
                 case R.id.ask_btn:
                     user_ask();
-                    break;
-
-                case R.id.btn_test:
-                    dialog_start();
                     break;
             }
         }
@@ -132,10 +110,7 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     void user_ask() {
-
-    }
-
-    void dialog_start() {
-        dialog.show();
+        Intent intent = new Intent(SettingActivity.this, ReportActivity.class);
+        startActivity(intent);
     }
 }

@@ -12,6 +12,11 @@ public class ChatroomModel {
     public String openChat_createdAt;
     public String makeUserImage;
     public String makeUserUID;
+    public String hashTag;
+    public String classify;
+    public int peopleCount;
+
+    public Map<String, Boolean> members = new HashMap<>();
 
     public Map<String, Boolean> users = new HashMap<>();
     public Map<String, ChatModel.Comment> comments = new HashMap<>();

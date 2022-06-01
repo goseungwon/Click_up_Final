@@ -1,10 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OpenChatActivity">
+    android:orientation="vertical"
+    tools:context=".OpenChatActivity"
+    android:id="@+id/drawerLayout">
+
+
+    <LinearLayout
+        android:id="@+id/bbb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80FBE6F8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="250dp"
+            android:layout_height="120dp"
+            android:background="@drawable/round_dialog"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="30dp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:text="채팅방에 입장합니다." />
+
+            <View style="@style/divide"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btn_nochat"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:text="NO" />
+
+                <Button
+                    android:id="@+id/btn_chatin"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="YES"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/openChat_linear"
@@ -16,12 +74,19 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/openChat_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="#808080"/>
+            android:layout_height="57dp"
+            android:background="#FFD9FA"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/img_menu"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_menu"
+                android:layout_gravity="right"
+                android:layout_marginRight="20dp" />
+
+        </androidx.appcompat.widget.Toolbar>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/openChat_recyclerView"
@@ -36,33 +101,34 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:gravity="bottom">
 
 
         <EditText
             android:id="@+id/openChat_input"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="45dp"
             android:layout_weight="1"
-            android:hint="      전송 버튼을 클릭하시면 시작됩니다."
+            android:backgroundTint="#DCDCDC"
+            android:hint="     메시지를 입력하시오"
             android:textSize="16dp"
-            android:textColorHint="@color/black"
+            android:textColorHint="#808080"
             android:textColor="@color/black"
             android:background="@color/white" />
 
         <ImageButton
             android:id="@+id/openChat_send"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="45dp"
             android:layout_weight="4"
-            android:src="@drawable/sendmessage"
-            android:background="@color/white"
+            android:src="@drawable/baseline_send"
+            android:background="#FFD9FA"
             />
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <include layout="@layout/side_bar" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -34,7 +34,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 
@@ -45,17 +48,11 @@ public class PostActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private FirebaseAuth auth;
     private FirebaseStorage storage;
-
     private RecyclerView post_read_view, read_comment_view;
     private Toolbar post_toolbar;
-
-    private String uid;
+    private String uid, post_user_uid;
     private String key, uidkey;
-
     private List<CommentDTO> commentDTOS = new ArrayList<>();
-    private List<WriteDTO> writeDTOS = new ArrayList<>();
-
-    private String latitude, longitude;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -66,17 +63,9 @@ public class PostActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            /*
-            case android.R.id.home:
-                finish();
-                return true;
-
-             */
-
             case R.id.toolbar_delete:
                 removePost();
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -93,6 +82,7 @@ public class PostActivity extends AppCompatActivity {
 
         uid = auth.getCurrentUser().getUid();
         key = getIntent().getStringExtra("key");
+        post_user_uid = getIntent().getStringExtra("post_uid");
         uidkey = getIntent().getStringExtra("uidkey");
 
         post_read_view = (RecyclerView) findViewById(R.id.read_post_view);
@@ -154,8 +144,27 @@ public class PostActivity extends AppCompatActivity {
         }
     }
 
-
     class ReadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+        private List<WriteDTO> writeDTOS = new ArrayList<>();
+
+        public ReadAdapter() {
+            database.getReference("posts").child(post_user_uid).child(uidkey).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    writeDTOS.clear();
+
+                    WriteDTO writeDTO = snapshot.getValue(WriteDTO.class);
+                    writeDTOS.add(writeDTO);
+
+                    notifyDataSetChanged();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -170,8 +179,6 @@ public class PostActivity extends AppCompatActivity {
             ((CustomViewHolder) holder).post_nick.setText(getIntent().getStringExtra("post_nick"));
             ((CustomViewHolder) holder).post_time.setText(getIntent().getStringExtra("post_time"));
             ((CustomViewHolder) holder).post_imageURL = getIntent().getStringExtra("post_image");
-
-            //String uidkey = getIntent().getStringExtra("uidkey");
 
             getSupportActionBar().setTitle(getIntent().getStringExtra("post_title"));
 
@@ -215,7 +222,20 @@ public class PostActivity extends AppCompatActivity {
                 }
             });
 
-            
+            ((CustomViewHolder) holder).post_like.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    postLike(database.getReference("posts").child(post_user_uid).child(uidkey));
+                }
+            });
+
+            if (writeDTOS.get(position).likemembers.containsKey(uid)) {
+                ((CustomViewHolder) holder).post_like.setImageResource(R.drawable.heart_full);
+            } else {
+                ((CustomViewHolder) holder).post_like.setImageResource(R.drawable.heart_blank);
+            }
+
+
             ((CustomViewHolder) holder).post_location.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -237,6 +257,35 @@ public class PostActivity extends AppCompatActivity {
             return 1;
         }
 
+        void postLike(DatabaseReference postRef) {
+            postRef.runTransaction(new Transaction.Handler() {
+                @NonNull
+                @Override
+                public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+                    WriteDTO writeDTO = currentData.getValue(WriteDTO.class);
+
+                    if (writeDTO == null) {
+                        return Transaction.success(currentData);
+                    }
+
+                    if (writeDTO.likemembers.containsKey(uid)) {
+                        writeDTO.likecount = writeDTO.likecount - 1;
+                        writeDTO.likemembers.remove(uid);
+                    } else {
+                        writeDTO.likecount = writeDTO.likecount + 1;
+                        writeDTO.likemembers.put(uid, true);
+                    }
+
+                    currentData.setValue(writeDTO);
+                    return Transaction.success(currentData);
+                }
+
+                @Override
+                public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
+
+                }
+            });
+        }
 
         private class CustomViewHolder extends RecyclerView.ViewHolder {
             public TextView post_content, post_nick, post_time;
@@ -264,8 +313,6 @@ public class PostActivity extends AppCompatActivity {
                 this.btn_comment_send = view.findViewById(R.id.btn_comment_send);
 
                 post_toolbar = (Toolbar) view.findViewById(R.id.post_toolbar);
-
-
             }
         }
     }

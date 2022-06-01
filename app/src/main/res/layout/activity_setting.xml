@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="#FFFFFF"
-    tools:context=".SettingActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".SettingActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/set_toolbar"
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
-        android:background="#808080"
+        android:background="#FFD9FA"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme" />
 
@@ -21,8 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="600dp"
         android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="12dp"
         android:background="#FFFFFF"
         android:orientation="vertical">
 
@@ -30,53 +30,43 @@
             android:id="@+id/friend_request"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:textColor="@color/black"
-            android:paddingLeft="30dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:backgroundTint="#E0E0E0"
             android:gravity="left|center"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:paddingLeft="30dp"
             android:text="친구 요청"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"/>
-
-        <Button
-            android:id="@+id/password_reset"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
             android:textColor="@color/black"
-            android:paddingLeft="30dp"
-            android:gravity="left|center"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:text="비밀번호 재설정"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"/>
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/ask_btn"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:textColor="@color/black"
-            android:paddingLeft="30dp"
-            android:gravity="left|center"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:text="문의 / 신고"
             android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"/>
+            android:layout_marginRight="3dp"
+            android:backgroundTint="#E0E0E0"
+            android:gravity="left|center"
+            android:paddingLeft="30dp"
+            android:text="문의 / 신고"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <Button
-            android:id="@+id/btn_test"
+            android:id="@+id/password_reset"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:textColor="@color/black"
-            android:paddingLeft="30dp"
-            android:gravity="left|center"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:text="다이얼로그 테스트"
             android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"/>
+            android:layout_marginRight="3dp"
+            android:backgroundTint="#E0E0E0"
+            android:gravity="left|center"
+            android:paddingLeft="30dp"
+            android:text="비밀번호 재설정"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -84,11 +74,11 @@
         android:id="@+id/setting_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="15dp"
-        android:backgroundTint="#808080"
         android:background="@drawable/loginbutton"
-        android:text="로그아웃"/>
+        android:backgroundTint="#808080"
+        android:text="로그아웃" />
 
 </LinearLayout>

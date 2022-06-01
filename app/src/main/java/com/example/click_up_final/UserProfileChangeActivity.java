@@ -37,12 +37,10 @@ public class UserProfileChangeActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseStorage storage;
     private FirebaseDatabase database;
-
     private ImageView imvChangeUserProfile;
     private EditText edtUserComment;
     private Button btnProfileChage;
     private Toolbar toolbar;
-
     private String imagePath;
 
     @Override
@@ -60,7 +58,7 @@ public class UserProfileChangeActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.change_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("프로필 변경");
+        getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         findViewById(R.id.imvChangeUserProfile).setOnClickListener(onClickListener);
@@ -101,11 +99,9 @@ public class UserProfileChangeActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == GALLERY_CODE) {
-
             imagePath = getPath(data.getData());
             File f = new File(getPath(data.getData()));
             imvChangeUserProfile.setImageURI(Uri.fromFile(f));
-
         }
     }
 
@@ -115,7 +111,6 @@ public class UserProfileChangeActivity extends AppCompatActivity {
 
         Cursor cursor = cursorLoader.loadInBackground();
         int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-
         cursor.moveToFirst();
 
         return cursor.getString(index);
@@ -166,7 +161,6 @@ public class UserProfileChangeActivity extends AppCompatActivity {
 
                         }
                     });
-
                 } else {
                     Toast.makeText(UserProfileChangeActivity.this, "포르필이 변경되지 않았습니다.", Toast.LENGTH_SHORT).show();
                 }

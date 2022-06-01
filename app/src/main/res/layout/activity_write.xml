@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".WriteActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".WriteActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/write_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="0dp"
-        android:background="#ffffff"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" >
+        android:layout_height="57dp"
+        android:background="#FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="left"
+            android:src="@drawable/clickup" />
 
         <Button
             android:id="@+id/btnPost"
@@ -23,13 +28,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginRight="20dp"
+            android:backgroundTint="#FFD9FA"
             android:text="등록"
-            android:textColor="#B51DA1"
-            android:backgroundTint="#FFD9FA"/>
-        
+            android:textColor="#B51DA1" />
+
     </androidx.appcompat.widget.Toolbar>
-
-
 
     <EditText
         android:id="@+id/edtTitle"
@@ -39,55 +42,63 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="25dp"
+        android:layout_marginBottom="20dp"
         android:ems="10"
         android:gravity="top"
         android:hint="제목"
         android:minHeight="48dp"
         android:privateImeOptions="defaultInputmode=korean"
         android:textColor="@color/black"
+        android:textColorHighlight="#ffffff"
         android:textColorHint="#8C8C8C"
-        android:textStyle="bold"
-        android:layout_marginBottom="20dp"
-        android:textColorHighlight="#ffffff"/>
+        android:textStyle="bold" />
 
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_below="@+id/edtTitle"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
+        android:layout_below="@+id/edtTitle"
         android:layout_marginStart="25dp"
+        android:layout_marginTop="0dp"
         android:layout_marginEnd="25dp">
 
         <ImageView
+            android:id="@+id/UploadImg"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:background="#DCDCDC"
-            android:id="@+id/UploadImg" />
+            android:background="@drawable/borderline"
+            android:backgroundTint="#ffffff" />
 
     </androidx.cardview.widget.CardView>
 
+    <TextView
+        android:id="@+id/cardText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cardView"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="25dp"
+        android:text="내용"
+        android:textColor="#5E5858" />
 
     <EditText
         android:id="@+id/edtContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/cardView"
+        android:layout_below="@+id/cardText"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="25dp"
+        android:background="@drawable/bordertext"
         android:ems="10"
         android:gravity="top"
-        android:hint="내용을 입력하세요."
-        android:textColor="@color/black"
-        android:textColorHint="#8C8C8C"
         android:inputType="textMultiLine"
-        android:lines="10"
+        android:lines="8"
+        android:padding="7dp"
         android:privateImeOptions="defaultInputmode=korean"
-        android:background="@android:color/transparent"/>
-
-
-
+        android:textColor="@color/black"
+        android:textColorHint="#8C8C8C" />
 
 </RelativeLayout>

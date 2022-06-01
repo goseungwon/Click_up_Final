@@ -9,17 +9,15 @@
         android:id="@+id/postMapview"
         android:layout_width="match_parent"
         android:layout_height="500dp">
-
     </RelativeLayout>
 
     <Button
+        android:id="@+id/btn_close"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
-        android:id="@+id/btn_close"
-        android:background="#e8d8e8"
         android:layout_gravity="center"
         android:layout_margin="8dp"
-        android:text="닫기"/>
-
+        android:background="#e8d8e8"
+        android:text="닫기" />
 
 </LinearLayout>

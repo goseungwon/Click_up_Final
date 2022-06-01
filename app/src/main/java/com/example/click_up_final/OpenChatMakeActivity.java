@@ -6,12 +6,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.click_up_final.Model.ChatroomModel;
@@ -28,11 +28,9 @@ import java.util.Date;
 public class OpenChatMakeActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseDatabase database;
-
-    private EditText edtOpenchat_title, edtOpenchat_memo;
-    private TextView textOpenchat_latitude, textOpenchat_longitute;
+    private EditText edtOpenchat_title, edtOpenchat_memo, edtOpenchat_hashtag, edtOpenchat_people;
     private Button btnOpenchat_make;
-    private Toolbar toolbar;
+    private RadioGroup rgChat;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,31 +40,20 @@ public class OpenChatMakeActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
+        btnOpenchat_make = (Button) findViewById(R.id.btnOpenchat_make);
         edtOpenchat_title = (EditText) findViewById(R.id.edtOpenchat_title);
         edtOpenchat_memo = (EditText) findViewById(R.id.edtOpenchat_memo);
-        textOpenchat_latitude = (TextView) findViewById(R.id.textOpenchat_latitude);
-        textOpenchat_longitute = (TextView) findViewById(R.id.textOpenchat_longitute);
-        btnOpenchat_make = (Button) findViewById(R.id.btnOpenchat_make);
-
-        toolbar = (Toolbar) findViewById(R.id.make_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("채팅방 개설");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        Intent thirdintent = getIntent();
-        String open_latitude = String.valueOf(thirdintent.getDoubleExtra("my_lati", 0));
-        String open_longitude = String.valueOf(thirdintent.getDoubleExtra("my_longi", 0));
-
-        textOpenchat_latitude.setText("위도 : " + open_latitude);
-        textOpenchat_longitute.setText("경도 : " + open_longitude);
+        edtOpenchat_hashtag = (EditText) findViewById(R.id.edtOpenchat_hashtag);
+        edtOpenchat_people = (EditText) findViewById(R.id.edtOpenchat_people);
+        rgChat = (RadioGroup) findViewById(R.id.rgChat);
 
         findViewById(R.id.btnOpenchat_make).setOnClickListener(onClickListener);
     }
 
-    View.OnClickListener onClickListener = new View.OnClickListener(){
+    View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.btnOpenchat_make:
                     makeopenchat();
                     break;
@@ -90,7 +77,6 @@ public class OpenChatMakeActivity extends AppCompatActivity {
         database.getReference().child("users").child(userUID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 UserModel userModel = snapshot.getValue(UserModel.class);
 
                 Long now = System.currentTimeMillis();
@@ -101,6 +87,10 @@ public class OpenChatMakeActivity extends AppCompatActivity {
                 String open_latitude = String.valueOf(thirdintent.getDoubleExtra("my_lati", 0));
                 String open_longitude = String.valueOf(thirdintent.getDoubleExtra("my_longi", 0));
 
+                int rbid = rgChat.getCheckedRadioButtonId();
+                RadioButton rb = (RadioButton) findViewById(rbid);
+                String classify = rb.getText().toString();
+
                 ChatroomModel chatroomModel = new ChatroomModel();
                 chatroomModel.openChat_Title = edtOpenchat_title.getText().toString();
                 chatroomModel.openChat_Memo = edtOpenchat_memo.getText().toString();
@@ -110,10 +100,19 @@ public class OpenChatMakeActivity extends AppCompatActivity {
                 chatroomModel.makeUserImage = userModel.userprofileImageURL;
                 chatroomModel.makeUserNickname = userModel.userNickname;
                 chatroomModel.makeUserUID = userModel.userUID;
+                chatroomModel.peopleCount = Integer.parseInt(String.valueOf(edtOpenchat_people.getText()));
+                chatroomModel.hashTag = edtOpenchat_hashtag.getText().toString();
+                chatroomModel.classify = classify;
 
-                database.getReference().child("openchat").child(userUID).setValue(chatroomModel);
-                Toast.makeText(OpenChatMakeActivity.this, "채팅방이 개설되었습니다.", Toast.LENGTH_SHORT).show();
-                finish();
+                if (classify.equals("  프렌드챗")) {
+                    database.getReference().child("friend_chat").child(userUID).setValue(chatroomModel);
+                    Toast.makeText(OpenChatMakeActivity.this, "프렌드챗 개설", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    database.getReference().child("every_chat").child(userUID).setValue(chatroomModel);
+                    Toast.makeText(OpenChatMakeActivity.this, "에브리챗 개설", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
 
             @Override

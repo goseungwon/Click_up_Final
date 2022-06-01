@@ -1,6 +1,7 @@
 package com.example.click_up_final;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -35,11 +36,9 @@ public class MyFriendActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseDatabase database;
     private String uid;
-
     private RecyclerView my_friend_recyclerview;
     private Toolbar toolbar;
     private Dialog dialog;
-
     private List<FriendDTO> friendDTOs = new ArrayList<>();
     private List<String> uidLists = new ArrayList<>();
 
@@ -66,7 +65,7 @@ public class MyFriendActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("친구 목록");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        database.getReference().child("friends").child(uid).orderByChild("friends/" + uid)
+        database.getReference().child("friends_").child(uid).orderByChild("friends/" + uid)
                 .equalTo(true).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -80,7 +79,6 @@ public class MyFriendActivity extends AppCompatActivity {
                     String uidkey = item.getKey();
                     uidLists.add(uidkey);
                 }
-
                 myFriendAdapter.notifyDataSetChanged();
             }
 
@@ -118,20 +116,20 @@ public class MyFriendActivity extends AppCompatActivity {
             String f_uid = friendDTOs.get(position).uid;
             String key = uidLists.get(position);
 
-            ((MyFriendViewHolder)holder).myfrienditem_TextView.setText(f_nick);
+            ((MyFriendViewHolder) holder).myfrienditem_TextView.setText(f_nick);
 
             Glide.with(holder.itemView.getContext()).load(f_url)
                     .apply(new RequestOptions().circleCrop())
-                    .into(((MyFriendViewHolder)holder).myfrienditem_imageView);
+                    .into(((MyFriendViewHolder) holder).myfrienditem_imageView);
 
-            ((MyFriendViewHolder)holder).friend_delete.setOnClickListener(new View.OnClickListener() {
+            ((MyFriendViewHolder) holder).friend_delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Button yesbtn = dialog.findViewById(R.id.btn_yes);
                     Button nobtn = dialog.findViewById(R.id.btn_no);
                     TextView text_dialog = dialog.findViewById(R.id.text_dialog);
 
-                    text_dialog.setText("요청을 수락하시겠습니까?");
+                    text_dialog.setText("친구 관계를 삭제합니다.");
                     dialog.show();
 
                     yesbtn.setOnClickListener(new View.OnClickListener() {
@@ -169,6 +167,18 @@ public class MyFriendActivity extends AppCompatActivity {
                 this.friend_delete = view.findViewById(R.id.friend_delete);
                 this.myfrienditem_TextView = view.findViewById(R.id.myfrienditem_TextView);
                 this.myfrienditem_imageView = view.findViewById(R.id.myfrienditem_imageView);
+
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(MyFriendActivity.this, FriendInfoActivity.class);
+                        intent.putExtra("friend_nickname", friendDTOs.get(getAdapterPosition()).nickname);
+                        intent.putExtra("friend_imageURL", friendDTOs.get(getAdapterPosition()).url);
+                        intent.putExtra("friend_comment", " ");
+                        intent.putExtra("destinationUid", friendDTOs.get(getAdapterPosition()).uid);
+                        startActivity(intent);
+                    }
+                });
             }
         }
     }

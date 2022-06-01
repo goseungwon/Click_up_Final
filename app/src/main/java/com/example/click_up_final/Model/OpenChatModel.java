@@ -5,7 +5,9 @@ import java.util.Map;
 
 public class OpenChatModel {
     public Map<String, Boolean> users = new HashMap<>();
+    public Map<String, Boolean> members = new HashMap<>();
     public Map<String, ChatModel.Comment> comments = new HashMap<>();
+    public int count = 0;
 
     public static class Comment {
         public String uid;

@@ -59,15 +59,13 @@ public class ChatWithOpenchatFragment extends Fragment {
         private String makeuserUID, roomTitle;
 
         public ChatOpenAdapter() {
-            database.getReference().child("openchat").addListenerForSingleValueEvent(new ValueEventListener() {
+            database.getReference().child("every_chat").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     chatroomModels.clear();
 
                     for (DataSnapshot item : dataSnapshot.getChildren()) {
                         chatroomModels.add(item.getValue(ChatroomModel.class));
-
-                        String uidkey = item.getKey();
                     }
                     notifyDataSetChanged();
                 }
@@ -77,12 +75,13 @@ public class ChatWithOpenchatFragment extends Fragment {
 
                 }
             });
+
         }
 
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chat, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_everychat, parent, false);
 
             return new CustomViewHolder(view);
         }
@@ -96,22 +95,9 @@ public class ChatWithOpenchatFragment extends Fragment {
                     .apply(new RequestOptions().circleCrop())
                     .into(customViewHolder.imageView);
 
-            customViewHolder.textView_title.setText(chatroomModels.get(position).openChat_Title);
-            customViewHolder.textView_last_message.setText(chatroomModels.get(position).openChat_Memo);
-
-            makeuserUID = chatroomModels.get(position).makeUserUID;
-            roomTitle = chatroomModels.get(position).openChat_Title;
-
-            customViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(view.getContext(), OpenChatActivity.class);
-                    intent.putExtra("makeUser", makeuserUID);
-                    intent.putExtra("roomtitle", roomTitle);
-
-                    startActivity(intent);
-                }
-            });
+            customViewHolder.everychat_title.setText(chatroomModels.get(position).openChat_Title);
+            customViewHolder.everychat_memo.setText(chatroomModels.get(position).openChat_Memo);
+            customViewHolder.everychat_hashtag.setText(chatroomModels.get(position).hashTag);
         }
 
         @Override
@@ -122,15 +108,31 @@ public class ChatWithOpenchatFragment extends Fragment {
         private class CustomViewHolder extends RecyclerView.ViewHolder {
 
             public ImageView imageView;
-            public TextView textView_title;
-            public TextView textView_last_message;
+            public TextView everychat_title;
+            public TextView everychat_memo;
+            public TextView everychat_hashtag;
 
             public CustomViewHolder(View view) {
                 super(view);
 
-                imageView = (ImageView) view.findViewById(R.id.chatitem_imageview);
-                textView_title = (TextView) view.findViewById(R.id.chatitem_textview_title);
-                textView_last_message = (TextView) view.findViewById(R.id.chatitem_textview_lastMessage);
+                imageView = (ImageView) view.findViewById(R.id.everychat_imageview);
+                everychat_title = (TextView) view.findViewById(R.id.everychat_title);
+                everychat_memo = (TextView) view.findViewById(R.id.everychat_memo);
+                everychat_hashtag = (TextView) view.findViewById(R.id.everychat_hashtag);
+
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        makeuserUID = chatroomModels.get(getAdapterPosition()).makeUserUID;
+                        roomTitle = chatroomModels.get(getAdapterPosition()).openChat_Title;
+
+                        Intent intent = new Intent(view.getContext(), OpenChatActivity.class);
+                        intent.putExtra("makeUser", makeuserUID);
+                        intent.putExtra("roomtitle", roomTitle);
+
+                        startActivity(intent);
+                    }
+                });
             }
         }
     }

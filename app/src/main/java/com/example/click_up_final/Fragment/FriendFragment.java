@@ -167,6 +167,7 @@ public class FriendFragment extends Fragment {
                         intent.putExtra("destinationUid", userModelList.get(getAdapterPosition()).userUID);
                         startActivity(intent);
 
+
                     }
                 });
             }

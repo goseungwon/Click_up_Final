@@ -5,21 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".RegisterActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".RegisterActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="80dp"
             android:text="회원가입"
-            android:textColor="#A493E8"
+            android:textColor="#E4C3E4"
             android:textSize="40dp"
             android:textStyle="bold" />
 
@@ -28,15 +28,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/edtId"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:background="#A493E8"
+            android:layout_marginTop="40dp"
+            android:background="#e8d8e8"
             android:drawableStart="@drawable/ic_baseline_person_24"
             android:drawableLeft="@drawable/ic_baseline_person_24"
             android:hint="이메일"
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="#A493E8"
+            android:background="#e8d8e8"
             android:drawableStart="@drawable/ic_baseline_https_24"
             android:drawableLeft="@drawable/ic_baseline_https_24"
             android:hint="비밀번호 (6자리 이상)"
@@ -65,10 +65,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="#A493E8"
+            android:background="#e8d8e8"
             android:drawableStart="@drawable/ic_baseline_https_24"
             android:drawableLeft="@drawable/ic_baseline_https_24"
             android:hint="비밀번호 확인"
+            android:inputType="textPassword"
             android:padding="10dp"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF" />
@@ -77,9 +78,9 @@
             android:id="@+id/edtNickname"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_gravity="center"
-            android:background="#A493E8"
+            android:layout_marginTop="10dp"
+            android:background="#e8d8e8"
             android:drawableStart="@drawable/ic_baseline_person_24"
             android:drawableLeft="@drawable/ic_baseline_person_24"
             android:hint="닉네임"
@@ -91,9 +92,9 @@
             android:id="@+id/edtUserName"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_gravity="center"
-            android:background="#A493E8"
+            android:layout_marginTop="10dp"
+            android:background="#e8d8e8"
             android:drawableStart="@drawable/ic_baseline_person_24"
             android:drawableLeft="@drawable/ic_baseline_person_24"
             android:hint="이름"
@@ -101,21 +102,18 @@
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF" />
 
-
-
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="80dp"
-        android:background="@drawable/loginbutton"
-        android:text="회원가입"
-        android:textColor="#ffffff"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="80dp"
+            android:background="@drawable/loginbutton"
+            android:text="회원가입"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
     </LinearLayout>
-
 
 </LinearLayout>

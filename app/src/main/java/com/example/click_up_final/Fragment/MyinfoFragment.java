@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.example.click_up_final.Model.UserModel;
 import com.example.click_up_final.Model.WriteDTO;
 import com.example.click_up_final.MyFriendActivity;
@@ -55,6 +56,8 @@ public class MyinfoFragment extends Fragment {
     private String imagePath;
     private FirebaseStorage storage;
 
+    public RequestManager glideManager;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -63,6 +66,8 @@ public class MyinfoFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
         String userUID = firebaseAuth.getCurrentUser().getUid();
+
+        glideManager = Glide.with(getActivity());
 
         profileImage = (CircleImageView) rootView.findViewById(R.id.profileImageView);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.myinfo_PostRecyclerView);
@@ -96,7 +101,7 @@ public class MyinfoFragment extends Fragment {
                 userComment.setText(userModel.userComment);
 
                 String url = userModel.userprofileImageURL;
-                Glide.with(getActivity()).load(url).into(profileImage);
+                glideManager.load(url).into(profileImage);
             }
 
             @Override

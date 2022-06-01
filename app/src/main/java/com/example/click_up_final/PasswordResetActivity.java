@@ -23,10 +23,8 @@ public class PasswordResetActivity extends AppCompatActivity {
     private TextView tv_email;
     private Button btn_email;
     private Toolbar toolbar;
-
     private FirebaseAuth auth;
     private FirebaseDatabase database;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,32 +33,26 @@ public class PasswordResetActivity extends AppCompatActivity {
 
         tv_email = (TextView) findViewById(R.id.tv_emailcheck);
         btn_email = (Button) findViewById(R.id.btnReset);
+        tv_email.setText(auth.getCurrentUser().getEmail());
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-
-        tv_email.setText(auth.getCurrentUser().getEmail());
 
         toolbar = (Toolbar) findViewById(R.id.mail_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("비밀번호 변경");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         findViewById(R.id.btnReset).setOnClickListener(onClickListener);
-
-
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-
                 case R.id.btnReset:
                     send_email();
                     break;
-
             }
         }
     };
@@ -104,8 +96,6 @@ public class PasswordResetActivity extends AppCompatActivity {
                 dialogInterface.dismiss();
             }
         });
-
         ad.show();
-
     }
 }

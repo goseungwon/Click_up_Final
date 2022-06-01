@@ -2,6 +2,7 @@ package com.example.click_up_final;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.click_up_final.Model.FriendDTO;
 import com.example.click_up_final.Model.FriendRequsetDTO;
 import com.example.click_up_final.Model.UserModel;
 import com.example.click_up_final.Model.WriteDTO;
@@ -37,15 +39,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class FriendInfoActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseDatabase database;
-
     private RecyclerView read_friend_view, read_friend_post;
     private Button btn_chatting_with_user, btn_add_friend, btn_footprint;
     private Dialog dialog;
-
     private List<UserModel> userDTOs = new ArrayList<>();
     private List<WriteDTO> writeDTOS = new ArrayList<>();
     private List<String> uidLists = new ArrayList<>();
-
     private String destinationUID;
     private String uid;
     private String destinationNick;
@@ -64,12 +63,10 @@ public class FriendInfoActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.dialog_custom);
 
         btn_chatting_with_user = (Button) findViewById(R.id.btn_chatting_with_user);
-        findViewById(R.id.btn_chatting_with_user).setOnClickListener(onClickListener);
-
         btn_add_friend = (Button) findViewById(R.id.btn_add_friend);
-        findViewById(R.id.btn_add_friend).setOnClickListener(onClickListener);
-
         btn_footprint = (Button) findViewById(R.id.btn_footprint);
+
+        findViewById(R.id.btn_chatting_with_user).setOnClickListener(onClickListener);
         findViewById(R.id.btn_footprint).setOnClickListener(onClickListener);
 
         read_friend_view = (RecyclerView) findViewById(R.id.read_friend_view);
@@ -83,7 +80,6 @@ public class FriendInfoActivity extends AppCompatActivity {
         read_friend_post.setAdapter(friendPostAdapter);
 
         destinationUID = getIntent().getStringExtra("destinationUid");
-
 
         database.getReference("users").addValueEventListener(new ValueEventListener() {
             @Override
@@ -133,9 +129,6 @@ public class FriendInfoActivity extends AppCompatActivity {
                 case R.id.btn_chatting_with_user:
                     goChat();
                     break;
-                case R.id.btn_add_friend:
-                    addFriend();
-                    break;
                 case R.id.btn_footprint:
                     footprint();
                     break;
@@ -158,7 +151,7 @@ public class FriendInfoActivity extends AppCompatActivity {
 
         text_dialog.setText("친구 요청을 보내시겠습니까?");
         dialog.show();
-        
+
         yesbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -205,8 +198,45 @@ public class FriendInfoActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
     class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+        public FriendAdapter() {
+            database.getReference().child("friends_").child(uid).orderByChild("friends/" + uid)
+                    .equalTo(true).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    for (DataSnapshot item : snapshot.getChildren()) {
+                        FriendDTO friendDTO = item.getValue(FriendDTO.class);
+
+                        if (friendDTO.uid.contains(destinationUID)) {
+                            btn_add_friend.setText("√  친구");
+                            btn_add_friend.setBackgroundColor(Color.rgb(255, 217, 250));
+                            btn_add_friend.setTextColor(Color.rgb(181, 29, 161));
+
+                            btn_add_friend.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Toast.makeText(FriendInfoActivity.this, "친구 관계입니다.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            btn_add_friend.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    addFriend();
+                                }
+                            });
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

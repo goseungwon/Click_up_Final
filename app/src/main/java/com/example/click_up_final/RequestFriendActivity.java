@@ -41,9 +41,7 @@ public class RequestFriendActivity extends AppCompatActivity {
     private String uid;
     private Dialog dialog;
     private Toolbar toolbar;
-
     private RecyclerView friend_request_recyclerview;
-
     private List<FriendRequsetDTO> friendRequsetDTOS = new ArrayList<>();
     private List<String> uidLists = new ArrayList<>();
 
@@ -60,7 +58,6 @@ public class RequestFriendActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("친구 요청");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -135,7 +132,6 @@ public class RequestFriendActivity extends AppCompatActivity {
             ((RequestViewHolder) holder).myuid = auth.getCurrentUser().getUid();
             ((RequestViewHolder) holder).friendsuid = f_uid;
 
-
             ((RequestViewHolder) holder).request_accept.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -158,7 +154,6 @@ public class RequestFriendActivity extends AppCompatActivity {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             UserModel userModel = snapshot.getValue(UserModel.class);
-
                                             FriendDTO friendDTO_my = new FriendDTO();
                                             FriendDTO friendDTO_other = new FriendDTO();
 
@@ -167,22 +162,25 @@ public class RequestFriendActivity extends AppCompatActivity {
 
                                             friendDTO_my.nickname = f_nick;
                                             friendDTO_my.url = f_url;
+                                            friendDTO_my.uid = f_uid;
 
                                             friendDTO_other.friends.put(uid, true);
                                             friendDTO_other.friends.put(f_uid, true);
 
                                             friendDTO_other.nickname = userModel.userNickname;
                                             friendDTO_other.url = userModel.userprofileImageURL;
+                                            friendDTO_other.uid = userModel.userUID;
 
-                                            database.getReference().child("friends").child(uid).push().setValue(friendDTO_my);
-                                            database.getReference().child("friends").child(f_uid).push().setValue(friendDTO_other);
+                                            database.getReference().child("friends_").child(uid).push().setValue(friendDTO_my);
+                                            database.getReference().child("friends_").child(f_uid).push().setValue(friendDTO_other);
+                                            dialog.dismiss();
 
                                             Toast.makeText(RequestFriendActivity.this, "요청을 수락하였습니다.", Toast.LENGTH_SHORT).show();
                                         }
 
                                         @Override
                                         public void onCancelled(@NonNull DatabaseError error) {
-
+                                            dialog.dismiss();
                                         }
                                     });
                                 }
@@ -198,7 +196,6 @@ public class RequestFriendActivity extends AppCompatActivity {
                     });
                 }
             });
-
 
             ((RequestViewHolder) holder).request_reject.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -217,6 +214,7 @@ public class RequestFriendActivity extends AppCompatActivity {
                                     .child(key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
+                                    dialog.dismiss();
                                     Toast.makeText(RequestFriendActivity.this, "요청을 거절하였습니다.", Toast.LENGTH_SHORT).show();
                                 }
                             });
@@ -251,7 +249,6 @@ public class RequestFriendActivity extends AppCompatActivity {
                 this.request_reject = view.findViewById(R.id.request_reject);
                 this.requestitem_imageView = view.findViewById(R.id.requestitem_imageView);
                 this.requestitem_textView = view.findViewById(R.id.requestitem_TextView);
-
             }
         }
     }

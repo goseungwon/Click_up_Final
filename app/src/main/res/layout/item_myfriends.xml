@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="70dp"
-    android:orientation="horizontal"
     android:background="@drawable/borderx"
-    android:backgroundTint="#DCDCDC">
+    android:backgroundTint="#FFFFFF"
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/myfrienditem_imageView"
@@ -15,19 +15,19 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/myfrienditem_TextView"
-            android:text="Nickname"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center"
-            android:textSize="18dp"
-            android:textColor="@color/black"/>
+            android:text="Nickname"
+            android:textColor="@color/black"
+            android:textSize="18dp" />
 
     </LinearLayout>
 
@@ -35,17 +35,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
         android:gravity="end|center"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/friend_delete"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:src="@drawable/baseline_close_18"
-            android:background="#F000F0"/>
+            android:background="#F000F0"
+            android:src="@drawable/baseline_close_18" />
 
     </LinearLayout>
+
 </LinearLayout>

@@ -1,100 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".OpenChatMakeActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".OpenChatMakeActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/make_toolbar"
+        android:id="@+id/makechat_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:background="#FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="left"
+            android:src="@drawable/clickup" />
+
+        <Button
+            android:id="@+id/btnOpenchat_make"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="#FFD9FA"
+            android:text="개설"
+            android:textColor="#B51DA1" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/make_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        android:background="#808080"/>
+        android:layout_below="@+id/makechat_toolbar"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="25dp"
+        android:text="제목"
+        android:textColor="#5E5858" />
 
     <EditText
         android:id="@+id/edtOpenchat_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/make_title"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="25dp"
+        android:background="@drawable/bordertext"
         android:ems="10"
         android:gravity="top"
-        android:hint="제목"
+        android:inputType="textMultiLine"
+        android:lines="1"
+        android:padding="3dp"
+        android:privateImeOptions="defaultInputmode=korean"
         android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:minHeight="48dp"
-        android:privateImeOptions="defaultInputmode=korean" />
+        android:textColorHint="#8C8C8C" />
+
+    <TextView
+        android:id="@+id/make_explain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edtOpenchat_title"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="25dp"
+        android:text="설명"
+        android:textColor="#5E5858" />
 
     <EditText
         android:id="@+id/edtOpenchat_memo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/edtOpenchat_title"
+        android:layout_below="@+id/make_explain"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="25dp"
+        android:background="@drawable/bordertext"
         android:ems="10"
         android:gravity="top"
-        android:hint="설명"
         android:inputType="textMultiLine"
-        android:lines="3"
+        android:lines="6"
+        android:padding="7dp"
         android:privateImeOptions="defaultInputmode=korean"
         android:textColor="@color/black"
-        android:textColorHint="@color/black"/>
+        android:textColorHint="#8C8C8C"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
-        android:id="@+id/text_explain"
+        android:id="@+id/make_hashtag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edtOpenchat_memo"
         android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="25dp"
-        android:gravity="center"
-        android:lines="5"
-        android:text="오픈 채팅방은 한 개만 개설할 수 있습니다."
+        android:text="해시태그"
+        android:textColor="#5E5858" />
+
+    <EditText
+        android:id="@+id/edtOpenchat_hashtag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/make_hashtag"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/bordertext"
+        android:ems="10"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:lines="1"
+        android:padding="7dp"
+        android:privateImeOptions="defaultInputmode=korean"
         android:textColor="@color/black"
-        android:textSize="15dp" />
+        android:textColorHint="#8C8C8C"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
-        android:id="@+id/textOpenchat_latitude"
+        android:id="@+id/make_people"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_explain"
+        android:layout_below="@+id/edtOpenchat_hashtag"
         android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="25dp"
-        android:gravity="center"
-        android:text="위도"
-        android:background="#DCDCDC"
-        android:textColor="@color/black"
-        android:textSize="17dp" />
+        android:text="참여인원"
+        android:textColor="#5E5858" />
 
-    <TextView
-        android:id="@+id/textOpenchat_longitute"
+    <EditText
+        android:id="@+id/edtOpenchat_people"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textOpenchat_latitude"
+        android:layout_below="@+id/make_people"
         android:layout_marginStart="25dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="25dp"
-        android:gravity="center"
-        android:text="경도"
-        android:background="#DCDCDC"
+        android:background="@drawable/bordertext"
+        android:ems="10"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:lines="1"
+        android:padding="7dp"
+        android:privateImeOptions="defaultInputmode=korean"
+        android:text="10"
         android:textColor="@color/black"
-        android:textSize="17dp" />
+        android:textColorHint="#8C8C8C"
+        tools:ignore="SpeakableTextPresentCheck" />
 
-    <Button
-        android:id="@+id/btnOpenchat_make"
+    <LinearLayout
+        android:id="@+id/lili"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textOpenchat_longitute"
+        android:layout_below="@+id/edtOpenchat_people"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="25dp"
-        android:textColor="#ffffff"
-        android:text="개설하기" />
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/rgChat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbFriend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="#C594BE"
+                android:text="  프렌드챗"
+                android:textColor="@color/black" />
+
+            <RadioButton
+                android:id="@+id/rbEvery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="#C594BE"
+                android:text="  에브리챗"
+                android:textColor="@color/black" />
+
+        </RadioGroup>
+
+    </LinearLayout>
 
 </RelativeLayout>

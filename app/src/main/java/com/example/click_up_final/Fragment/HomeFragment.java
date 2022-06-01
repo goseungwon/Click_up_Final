@@ -17,8 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,13 +30,9 @@ import androidx.fragment.app.Fragment;
 import com.example.click_up_final.LoginActivity;
 import com.example.click_up_final.Model.ChatroomModel;
 import com.example.click_up_final.Model.WriteDTO;
-import com.example.click_up_final.MyFriendActivity;
 import com.example.click_up_final.OpenChatMakeActivity;
 import com.example.click_up_final.R;
-import com.example.click_up_final.SettingActivity;
-import com.example.click_up_final.UserProfileChangeActivity;
 import com.example.click_up_final.WriteActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -55,8 +49,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class HomeFragment extends Fragment {
     private ImageView img_make_openchat, img_make_post;
@@ -68,8 +60,8 @@ public class HomeFragment extends Fragment {
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION};
 
-    public Double my_lati =0.0;
-    public Double my_longi = 0.0;
+    public Double my_lati;
+    public Double my_longi;
 
     public String marker_nick;
 
@@ -103,8 +95,7 @@ public class HomeFragment extends Fragment {
         mapViewContainer.addView(mapView);
 
         marker_Post();
-        circle_OpenChat();
-        sportlight_Post();
+        //circle_OpenChat();
 
         if (!checkLocationServiceStatus()) {
             showDialogForLocationServiceSetting();
@@ -112,6 +103,10 @@ public class HomeFragment extends Fragment {
             checkRunTimePermission();
         }
 
+        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+        mapView.setShowCurrentLocationMarker(false);
+
+        /*
         Timer timer = new Timer();
 
         TimerTask Trkoff = new TimerTask() {
@@ -122,16 +117,17 @@ public class HomeFragment extends Fragment {
         };
         timer.schedule(Trkoff, 5000, 2999);
 
-
         TimerTask Trkon = new TimerTask() {
             @Override
             public void run() {
                 mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
             }
         };
-        timer.schedule(Trkon,1000, 1000*60*5);
+        timer.schedule(Trkon, 1000, 1000 * 60 * 5);
+
         mapView.setShowCurrentLocationMarker(false);
 
+         */
 
         img_make_openchat = (ImageView) v.findViewById(R.id.img_make_openchat);
         img_make_post = (ImageView) v.findViewById(R.id.img_make_post);
@@ -189,7 +185,6 @@ public class HomeFragment extends Fragment {
                 yesbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
                         Toast.makeText(getActivity(), "작성 화면으로 이동합니다.", Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
 
@@ -285,10 +280,9 @@ public class HomeFragment extends Fragment {
     }
 
     private void marker_Post() {
-        database.getReference().child("posts").child(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+        database.getReference().child("posts").child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                mapView.setCalloutBalloonAdapter(new DialogAdapter());
 
                 for (DataSnapshot item : snapshot.getChildren()) {
                     WriteDTO writeDTO = item.getValue(WriteDTO.class);
@@ -310,6 +304,8 @@ public class HomeFragment extends Fragment {
                     marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
                     marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
                     mapView.addPOIItem(marker);
+
+                    mapView.setCalloutBalloonAdapter(new DialogAdapter());
                 }
             }
 
@@ -328,46 +324,6 @@ public class HomeFragment extends Fragment {
 
                     Double lat1 = Double.parseDouble(chatroomModel.openChat_latitude);
                     Double lon1 = Double.parseDouble(chatroomModel.openChat_longitude);
-                    String title = chatroomModel.openChat_Title;
-
-                    mapView.setCurrentLocationEventListener(new MapView.CurrentLocationEventListener() {
-                        @Override
-                        public void onCurrentLocationUpdate(MapView mapView, MapPoint mapPoint, float v) {
-                            lat3 = mapPoint.getMapPointGeoCoord().latitude;
-                            lon3 = mapPoint.getMapPointGeoCoord().longitude;
-
-                            Double lat2 = lat3;
-                            Double lon2 = lon3;
-
-                            Double dlat = Math.toRadians(lat2 - lat1);
-                            Double dlon = Math.toRadians(lon2 - lon1);
-
-                            Double R = 6372.8 * 1000;
-                            Double d = Math.pow(Math.sin(dlat / 2), 2) + Math.pow(Math.sin(dlon / 2) , 2)
-                                    * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
-                            Double c = 2 * Math.asin(Math.sqrt(d));
-
-
-                            int distance = Integer.parseInt(String.valueOf(Math.round(R * c)));
-
-                            // Toast.makeText(getActivity(), "거리는 : " + distance + "m", Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void onCurrentLocationDeviceHeadingUpdate(MapView mapView, float v) {
-
-                        }
-
-                        @Override
-                        public void onCurrentLocationUpdateFailed(MapView mapView) {
-
-                        }
-
-                        @Override
-                        public void onCurrentLocationUpdateCancelled(MapView mapView) {
-
-                        }
-                    });
 
                     circle = new MapCircle(
                             MapPoint.mapPointWithGeoCoord(lat1, lon1), // center
@@ -387,43 +343,6 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
-    private void sportlight_Post() {
-        database.getReference().child("openchat").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                mapView.setCalloutBalloonAdapter(new DialogAdapter1());
-
-                for (DataSnapshot item : snapshot.getChildren()) {
-                    ChatroomModel chatroomModel = item.getValue(ChatroomModel.class);
-
-                    String title = chatroomModel.openChat_Title;
-                    String nick = chatroomModel.makeUserNickname;
-
-
-                    MapPOIItem splMarker = new MapPOIItem();
-
-                    splMarker.setUserObject(title);
-                    marker_nick = nick;
-
-                    splMarker.setItemName("openchatmarker");
-                    splMarker.setTag(1);
-                    splMarker.setMapPoint(MapPoint.mapPointWithGeoCoord(my_lati+0.001, my_longi));
-                    splMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
-                    splMarker.setCustomImageResourceId(R.drawable.spotlight);
-                    splMarker.setCustomImageAutoscale(true);
-                    splMarker.setCustomImageAnchor(0.5f,1.0f);
-                    mapView.addPOIItem(splMarker);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-    }
-
 
     private void checkRunTimePermission() {
         int hasFineLocationPermission = ContextCompat.checkSelfPermission(getActivity(),
@@ -492,7 +411,7 @@ public class HomeFragment extends Fragment {
 
 
     class DialogAdapter implements CalloutBalloonAdapter {
-        private final View dialog;
+        private View dialog;
 
         public DialogAdapter() {
             dialog = getLayoutInflater().inflate(R.layout.item_dialog, null);
@@ -510,30 +429,6 @@ public class HomeFragment extends Fragment {
         }
 
 
-
-        @Override
-        public View getPressedCalloutBalloon(MapPOIItem mapPOIItem) {
-
-            return dialog;
-        }
-    }
-
-    class DialogAdapter1 implements CalloutBalloonAdapter {
-        private final View dialog;
-
-        public DialogAdapter1() {
-            dialog = getLayoutInflater().inflate(R.layout.item_dialog, null);
-        }
-
-        @Override
-        public View getCalloutBalloon(MapPOIItem mapPOIItem) {
-
-            ((TextView) dialog.findViewById(R.id.dialog_title)).setText(mapPOIItem.getUserObject().toString());
-            ((TextView) dialog.findViewById(R.id.dialog_name)).setText(marker_nick);
-
-            return dialog;
-        }
-
         @Override
         public View getPressedCalloutBalloon(MapPOIItem mapPOIItem) {
 
@@ -543,29 +438,30 @@ public class HomeFragment extends Fragment {
 
 
 
-    public Bitmap getBitmap(String imgPath){
-        Thread imgThread = new Thread(){
+
+    public Bitmap getBitmap(String imgPath) {
+        Thread imgThread = new Thread() {
             @Override
-            public void run(){
+            public void run() {
                 try {
                     URL url = new URL(imgPath);
-                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setDoInput(true);
                     conn.connect();
                     InputStream is = conn.getInputStream();
                     bitmap = BitmapFactory.decodeStream(is);
-                }catch (IOException e){
+                } catch (IOException e) {
                     Log.d("비트맵 변환 스레드", e.toString());
 
                 }
             }
         };
         imgThread.start();
-        try{
+        try {
             imgThread.join();
-        }catch (InterruptedException e){
+        } catch (InterruptedException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             return bitmap;
         }
     }

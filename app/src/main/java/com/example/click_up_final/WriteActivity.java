@@ -46,12 +46,10 @@ public class WriteActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseStorage storage;
     private FirebaseDatabase database;
-
     private ImageView uploadImg;
     private EditText edtTitle, edtContent;
     private Button btnPost;
     private Toolbar toolbar;
-
     private String imagePath;
     private int CAPTURE_IMAGE =2;
     private String mCurrentPhotoPath;
@@ -98,7 +96,7 @@ public class WriteActivity extends AppCompatActivity {
         AlertDialog.Builder ad = new AlertDialog.Builder(this);
         ad.setTitle("사진 업로드");
 
-        ad.setItems(PhotoModels, new DialogInterface.OnClickListener() {
+        ad.setSingleChoiceItems(PhotoModels, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (i == 0 ){
@@ -116,7 +114,6 @@ public class WriteActivity extends AppCompatActivity {
 
     private void takePictureFromCameraIntent(){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        //카메라 권한 확인
         Log.d("camera", "2번");
 
         if (takePictureIntent.resolveActivity(getPackageManager()) !=null){
@@ -126,63 +123,48 @@ public class WriteActivity extends AppCompatActivity {
             }catch (IOException ex){
                 Log.d("camera", "카메라 파일생성 오류");
             }
-            //파일생성이 성공적일시
             if (f != null){
                 Uri photoURI = FileProvider.getUriForFile(this,
                         "com.example.click_up_final.fileprovider", f);
-                //메타데이터 주소
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, CAPTURE_IMAGE);
-                //카메라에서 찍은 이미지 메타테이터에 저장
             }
         }
     }
-
 
     private File createImageFile() throws IOException{
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
+                imageFileName, ".jpg", storageDir
         );
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
 
-
-
-
-
     public void onActivityResult(int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == GALLERY_CODE) {
-
             imagePath = getPath(data.getData());
             File f = new File(getPath(data.getData()));
             uploadImg.setImageURI(Uri.fromFile(f));
-
         }
 
         if(requestCode == CAPTURE_IMAGE){
             File f = new File(mCurrentPhotoPath);
             imagePath = mCurrentPhotoPath;
-            //Log.d("경로", mCurrentPhotoPath);
             uploadImg.setImageURI(Uri.fromFile(f));
         }
     }
 
-    // 경로를 출력하는 메소드
     public String getPath(Uri uri) {
         String [] proj = {MediaStore.Images.Media.DATA};
         CursorLoader cursorLoader = new CursorLoader(this, uri, proj, null, null, null);
 
         Cursor cursor = cursorLoader.loadInBackground();
         int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-
         cursor.moveToFirst();
 
         return cursor.getString(index);
@@ -200,18 +182,14 @@ public class WriteActivity extends AppCompatActivity {
                 if (!task.isSuccessful()) {
                     throw task.getException();
                 }
-
                 return riversRef.getDownloadUrl();
             }
         }).addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
-                    // 작성 성공
-                    // Uri downloadUri = task.getResult();
                     String userUID = auth.getCurrentUser().getUid();
 
-                    // 작성시간을 yy-mm-dd hh:mm:ss 형식으로 얻어오기
                     Long now = System.currentTimeMillis();
                     Date date = new Date(now);
                     SimpleDateFormat createdAt = new SimpleDateFormat("yy/MM/dd, hh:mm aaa");
@@ -222,14 +200,9 @@ public class WriteActivity extends AppCompatActivity {
                             UserModel userModel = snapshot.getValue(UserModel.class);
 
                             String nickname = userModel.userNickname;
-                            String like_key = snapshot.getKey();
-
-                            Toast.makeText(WriteActivity.this, nickname, Toast.LENGTH_SHORT).show();
-
                             Uri downloadUri = task.getResult();
 
                             WriteDTO writeDTO = new WriteDTO();
-
                             writeDTO.imageURL = downloadUri.toString();
                             writeDTO.title = edtTitle.getText().toString();
                             writeDTO.content = edtContent.getText().toString();
@@ -252,11 +225,7 @@ public class WriteActivity extends AppCompatActivity {
 
                         }
                     });
-
-                    // writeDTO.userid = auth.getCurrentUser().getEmail();
-
                 } else {
-                    // 작성 실패
                     Toast.makeText(WriteActivity.this, "게시물이 등록되지 않았습니다.", Toast.LENGTH_SHORT).show();
                 }
             }

@@ -1,6 +1,5 @@
 package com.example.click_up_final;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -83,13 +82,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void startToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-    }
-
-    private void startActivity(Class c) {
-        Intent intent = new Intent(this, c);
-        // 메인엑티비티에서 뒤로가기 누를 시 바로 종료를 위함
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
     }
 
     private void updateUI(FirebaseUser user) {

@@ -5,42 +5,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".PostActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".PostActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="#DCDCDC"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="1dp">
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="15dp"
+        android:background="#ffffff">
 
         <TextView
             android:id="@+id/post_read_nick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:textColor="@color/black"
             android:text="Nickname"
-            android:textSize="18dp"/>
+            android:textColor="@color/black"
+            android:textSize="18dp" />
 
         <TextView
             android:id="@+id/post_read_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textColor="@color/black"
             android:layout_marginRight="15dp"
-            android:text="Date" />
+            android:gravity="right"
+            android:text="Date"
+            android:textColor="#808080" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="5dp">
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/post_read_imageView"
@@ -49,72 +48,72 @@
             android:layout_gravity="center" />
 
     </LinearLayout>
-    <View style="@style/divide"
-        android:layout_marginBottom="10dp"/>
 
     <TextView
         android:id="@+id/post_read_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:lines="4"
-        android:text="Contents"
-        android:textColor="@color/black"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:textSize="16dp"/>
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/borderline"
+        android:lines="4"
+        android:padding="7dp"
+        android:text="Contents"
+        android:textColor="@color/black"
+        android:textSize="16dp" />
+
+    <View
+        style="@style/divide"
+        android:layout_marginBottom="10dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:background="#DCDCDC"
-        android:layout_marginTop="10dp"
-        >
+        android:background="@drawable/bordery"
+        android:backgroundTint="@color/white"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/post_read_like"
             android:layout_width="33dp"
             android:layout_height="33dp"
-            android:src="@drawable/heart_blank"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/heart_blank" />
 
         <ImageButton
             android:id="@+id/post_read_loaction"
             android:layout_width="33dp"
             android:layout_height="33dp"
-            android:background="#DCDCDC"
-            android:src="@drawable/share_loaction"
             android:layout_gravity="center"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+            android:background="#FFFFFF"
+            android:src="@drawable/share_loaction" />
 
         <EditText
             android:id="@+id/edt_inputComment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="    댓글을 입력하세요."
             android:layout_margin="5dp"
-            android:textColor="@color/black"
-            android:backgroundTint="#FFFFFF"
             android:layout_weight="1"
-            android:background="@color/white" />
+            android:background="@color/white"
+            android:backgroundTint="#FFFFFF"
+            android:hint="    댓글을 입력하세요."
+            android:textColor="@color/black"
+            android:textColorHint="#808080" />
 
         <Button
             android:id="@+id/btn_comment_send"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="입력"
-            android:textSize="10dp"
-            android:backgroundTint="#DCDCDC"
-            android:layout_weight="2"
+            android:layout_height="40dp"
             android:layout_marginRight="10dp"
-            android:background="@color/white"
-            />
-
+            android:layout_weight="2"
+            android:backgroundTint="#FFD9FA"
+            android:text="입력"
+            android:textColor="#B51DA1"
+            android:textSize="10dp" />
 
     </LinearLayout>
-
-
-
 
 </LinearLayout>

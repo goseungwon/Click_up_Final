@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#FFFFFF"
+    android:orientation="vertical"
     tools:context=".FriendInfoActivity">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -22,7 +22,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingClass" />
 
-
     <TextView
         android:id="@+id/friend_tvNickname"
         android:layout_width="match_parent"
@@ -31,8 +30,8 @@
         android:text="닉네임"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textStyle="bold"
         android:textSize="20dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/friend_profileImageView" />
@@ -41,11 +40,11 @@
         android:id="@+id/friend_Comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:lines="2"
         android:text="상태 메시지"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="16dp"
-        android:lines="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/friend_tvNickname" />
@@ -56,4 +55,5 @@
         android:layout_marginTop="300dp">
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

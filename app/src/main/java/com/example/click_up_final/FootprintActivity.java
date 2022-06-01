@@ -25,10 +25,8 @@ public class FootprintActivity extends AppCompatActivity {
     private String destinationUID;
     private String destinationNick;
     private Toolbar toolbar;
-
     private FirebaseAuth auth;
     private FirebaseDatabase database;
-
     private MapView mapView;
     private MapPOIItem marker;
 
@@ -36,6 +34,9 @@ public class FootprintActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_footprint);
+
+        auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
 
         toolbar = (Toolbar) findViewById(R.id.foot_toolbar);
         setSupportActionBar(toolbar);
@@ -54,19 +55,13 @@ public class FootprintActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle(destinationNick + " 님의 발자취 ");
 
-        auth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-
         foot_print();
-
-
     }
 
     private void foot_print() {
         database.getReference("posts").child(destinationUID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 for (DataSnapshot item : snapshot.getChildren()) {
                     WriteDTO writeDTO = item.getValue(WriteDTO.class);
 

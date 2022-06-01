@@ -41,6 +41,8 @@ public class ChatWithFriendFragment extends Fragment {
     private FirebaseAuth auth;
     private FirebaseDatabase database;
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

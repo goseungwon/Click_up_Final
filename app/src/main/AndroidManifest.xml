@@ -25,7 +25,13 @@
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
+            android:name=".FriendChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".OpenChatMakeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ReportActivity"
             android:exported="false" />
         <activity
             android:name=".SettingActivity"

@@ -4,34 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#FFFFFF"
+    android:orientation="vertical"
     tools:context=".FriendInfoActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/read_friend_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="10dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btn_chatting_with_user"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="5dp"
+            android:layout_weight="1"
             android:backgroundTint="#DCDCDC"
-            android:textColor="@color/black"
-            android:text="1:1 채팅" />
+            android:text="1:1 채팅"
+            android:textColor="@color/black" />
 
         <Button
             android:id="@+id/btn_add_friend"
@@ -41,8 +41,8 @@
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:backgroundTint="#DCDCDC"
-            android:textColor="@color/black"
-            android:text="친구 요청" />
+            android:text="친구 요청"
+            android:textColor="@color/black" />
 
         <Button
             android:id="@+id/btn_footprint"
@@ -51,10 +51,9 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="15dp"
             android:layout_weight="1"
-            android:backgroundTint="#DCDCDC"
-            android:textColor="@color/black"
-            android:text="발자취" />
-
+            android:backgroundTint="#FFD9FA"
+            android:text="발자취"
+            android:textColor="#B51DA1" />
 
     </LinearLayout>
 
@@ -62,6 +61,6 @@
         android:id="@+id/read_friend_post"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -24,7 +24,6 @@ public class ChatFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_chat, container, false);
 
         fragment_chat = new ChatWithFriendFragment();
@@ -32,27 +31,20 @@ public class ChatFragment extends Fragment {
         fragment_everychat = new ChatWithOpenchatFragment();
 
         TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.tabs);
-        
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
-                
-                Fragment selected = null;
-                
+
                 if (position == 0) {
-                    selected = fragment_chat;
-                    setChildFragment(selected);
+                    setChildFragment(fragment_chat);
                 } 
                 else if (position == 1) {
-                    // 임시
-                    selected = fragment_friendchat;
-                    setChildFragment(selected);
+                    setChildFragment(fragment_friendchat);
                 }
                 
                 else if (position == 2) {
-                    selected = fragment_everychat;
-                    setChildFragment(selected);
+                    setChildFragment(fragment_everychat);
                 }
             }
 
@@ -65,7 +57,6 @@ public class ChatFragment extends Fragment {
 
             }
         });
-
         return rootView;
     }
 

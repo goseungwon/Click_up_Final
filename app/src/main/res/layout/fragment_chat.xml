@@ -26,29 +26,28 @@
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
         android:background="@color/white"
-        app:tabTextColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:tabSelectedTextColor="@drawable/menu_selector_color"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:tabTextColor="@color/black"
+        tools:ignore="MissingConstraints">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1:1 채팅"/>
+            android:text="1:1 채팅" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="프렌드챗"/>
+            android:text="프렌드챗" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="에브리챗"/>
+            android:text="에브리챗" />
 
     </com.google.android.material.tabs.TabLayout>
-
 
     <LinearLayout
         android:id="@+id/linearLayout6"
@@ -70,7 +69,6 @@
         android:layout_marginTop="115dp"
         app:layout_constraintTop_toBottomOf="@+id/tabs"
         tools:layout_editor_absoluteX="0dp">
-
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

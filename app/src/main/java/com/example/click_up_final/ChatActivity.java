@@ -44,17 +44,12 @@ public class ChatActivity extends AppCompatActivity {
     private EditText edt_inputMsg;
     private RecyclerView recyclerView_chatting;
     private Toolbar my_toolbar;
-
     private FirebaseAuth auth;
     private FirebaseDatabase database;
-
     private String uid;
     private String chatRoomUid;
-
     private DatabaseReference databaseReference;
     private ValueEventListener valueEventListener;
-
-    int peopleCount = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -136,7 +131,6 @@ public class ChatActivity extends AppCompatActivity {
                     }
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -145,7 +139,6 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
         List<ChatModel.Comment> comments;
         UserModel userModel;
 
@@ -158,7 +151,6 @@ public class ChatActivity extends AppCompatActivity {
                     userModel = dataSnapshot.getValue(UserModel.class);
                     getMessageList();
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 
@@ -199,7 +191,6 @@ public class ChatActivity extends AppCompatActivity {
                         recyclerView_chatting.scrollToPosition(comments.size() - 1);
                     }
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 
@@ -226,7 +217,6 @@ public class ChatActivity extends AppCompatActivity {
                 messageViewHolder.linearLayout_destination.setVisibility(View.INVISIBLE);
                 messageViewHolder.textView_message.setTextSize(16);
                 messageViewHolder.linearlayout_main.setGravity(Gravity.RIGHT);
-                setReadCounter(position, messageViewHolder.textView_readCounter);
             } else {
                 Glide.with(holder.itemView.getContext()).load(userModel.userprofileImageURL)
                         .apply(new RequestOptions().circleCrop()).into(messageViewHolder.imageView_profile);
@@ -236,41 +226,6 @@ public class ChatActivity extends AppCompatActivity {
                 messageViewHolder.textView_message.setText(comments.get(position).message);
                 messageViewHolder.textView_message.setTextSize(16);
                 messageViewHolder.linearlayout_main.setGravity(Gravity.LEFT);
-                setReadCounter(position, messageViewHolder.textView_readCounter);
-            }
-        }
-
-        void setReadCounter(final int position, TextView textView) {
-            if (peopleCount == 0) {
-                database.getReference().child("chatrooms").child(chatRoomUid).child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        Map<String, Boolean> users = (Map<String, Boolean>) dataSnapshot.getValue();
-
-                        peopleCount = users.size() - 1;
-                        int count = peopleCount - comments.get(position).readUsers.size();
-
-                        if (count > 0) {
-                            textView.setVisibility(View.VISIBLE);
-                            textView.setText(String.valueOf(count));
-                        } else {
-                            textView.setVisibility(View.INVISIBLE);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                });
-            } else {
-                int count = peopleCount - comments.get(position).readUsers.size();
-
-                if (count > 0) {
-                    textView.setVisibility(View.VISIBLE);
-                    textView.setText(String.valueOf(count));
-                } else {
-                    textView.setVisibility(View.INVISIBLE);
-                }
             }
         }
 
@@ -285,8 +240,6 @@ public class ChatActivity extends AppCompatActivity {
             public ImageView imageView_profile;
             public LinearLayout linearLayout_destination;
             public LinearLayout linearlayout_main;
-            public TextView textView_readCounter;
-
             public Toolbar my_toolbar;
 
             public MessageViewHolder(View view) {
@@ -296,7 +249,6 @@ public class ChatActivity extends AppCompatActivity {
                 imageView_profile = (ImageView) view.findViewById(R.id.messageItem_imageview_profile);
                 linearLayout_destination = (LinearLayout) view.findViewById(R.id.messageItem_linearlayout_destination);
                 linearlayout_main = (LinearLayout) view.findViewById(R.id.messageItem_linearlayout_main);
-                textView_readCounter = (TextView) view.findViewById(R.id.messageItem_readCounter);
                 my_toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
             }
         }
