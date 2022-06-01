@@ -96,7 +96,7 @@ public class WriteActivity extends AppCompatActivity {
         AlertDialog.Builder ad = new AlertDialog.Builder(this);
         ad.setTitle("사진 업로드");
 
-        ad.setSingleChoiceItems(PhotoModels, -1, new DialogInterface.OnClickListener() {
+        ad.setItems(PhotoModels, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (i == 0 ){

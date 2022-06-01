@@ -29,6 +29,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.click_up_final.LoginActivity;
 import com.example.click_up_final.Model.ChatroomModel;
+import com.example.click_up_final.Model.FriendDTO;
 import com.example.click_up_final.Model.WriteDTO;
 import com.example.click_up_final.OpenChatMakeActivity;
 import com.example.click_up_final.R;
@@ -49,6 +50,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
     private ImageView img_make_openchat, img_make_post;
@@ -70,8 +74,13 @@ public class HomeFragment extends Fragment {
     private MapCircle circle;
     private Bitmap bitmap;
     private Dialog dialog;
+    private String uid;
 
     public Double lat3, lon3;
+
+    List<String> friend_list = new ArrayList<>(Arrays.asList());
+            //Arrays.asList("J6q8wonh4eQfk2YQdAy9oceuYPy2", "6Zo3bLu4mwRogGcEF7RAI3AeEYv1", "zGZEKcSs07ZAepGK5Tblo4Toe0Z2"));
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,6 +89,7 @@ public class HomeFragment extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
+        uid = firebaseAuth.getCurrentUser().getUid();
 
         dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -94,7 +104,9 @@ public class HomeFragment extends Fragment {
         ViewGroup mapViewContainer = (ViewGroup) v.findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
 
+        get_friends();
         marker_Post();
+        friends_marker_Post();
         //circle_OpenChat();
 
         if (!checkLocationServiceStatus()) {
@@ -281,39 +293,108 @@ public class HomeFragment extends Fragment {
 
     private void marker_Post() {
         database.getReference().child("posts").child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    for (DataSnapshot item : snapshot.getChildren()) {
+                        WriteDTO writeDTO = item.getValue(WriteDTO.class);
+
+                        Double lat_ = Double.parseDouble(writeDTO.latitude);
+                        Double long_ = Double.parseDouble(writeDTO.longigude);
+
+                        String title = writeDTO.title;
+                        String nick = writeDTO.userid;
+                        String url = writeDTO.imageURL;
+
+                        marker_nick = nick;
+
+                        marker = new MapPOIItem();
+                        marker.setItemName(url);
+                        marker.setUserObject(title);
+                        marker.setTag(0);
+                        marker.setMapPoint(MapPoint.mapPointWithGeoCoord(lat_, long_));
+                        marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
+                        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+                        mapView.addPOIItem(marker);
+
+                        mapView.setCalloutBalloonAdapter(new DialogAdapter());
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+    }
+
+
+    private List<String> get_friends() {
+        database.getReference().child("friends_").child(uid).orderByChild("friends/" + uid)
+                .equalTo(true).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for (DataSnapshot item : snapshot.getChildren()) {
-                    WriteDTO writeDTO = item.getValue(WriteDTO.class);
-
-                    Double lat_ = Double.parseDouble(writeDTO.latitude);
-                    Double long_ = Double.parseDouble(writeDTO.longigude);
-
-                    String title = writeDTO.title;
-                    String nick = writeDTO.userid;
-                    String url = writeDTO.imageURL;
-
-                    marker_nick = nick;
-
-                    marker = new MapPOIItem();
-                    marker.setItemName(url);
-                    marker.setUserObject(title);
-                    marker.setTag(0);
-                    marker.setMapPoint(MapPoint.mapPointWithGeoCoord(lat_, long_));
-                    marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
-                    marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-                    mapView.addPOIItem(marker);
-
-                    mapView.setCalloutBalloonAdapter(new DialogAdapter());
+                    FriendDTO friendDTO = item.getValue(FriendDTO.class);
+                    int i =0;
+                    friend_list.add(i,friendDTO.uid);
+                    i++;
+                    Log.d("uid", friendDTO.uid);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
+        return friend_list;
     }
+
+
+    private void friends_marker_Post() {
+        //get_friends();
+        for (int i=0; i<friend_list.size(); i++) {
+            database.getReference().child("posts").child(friend_list.get(i).toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    for (DataSnapshot item : snapshot.getChildren()) {
+                        WriteDTO writeDTO = item.getValue(WriteDTO.class);
+
+                        Double lat_ = Double.parseDouble(writeDTO.latitude);
+                        Double long_ = Double.parseDouble(writeDTO.longigude);
+
+                        String title = writeDTO.title;
+                        String nick = writeDTO.userid;
+                        String url = writeDTO.imageURL;
+
+                        marker_nick = nick;
+
+                        marker = new MapPOIItem();
+                        marker.setItemName(url);
+                        marker.setUserObject(title);
+                        marker.setTag(0);
+                        marker.setMapPoint(MapPoint.mapPointWithGeoCoord(lat_, long_));
+                        marker.setMarkerType(MapPOIItem.MarkerType.RedPin); // 기본으로 제공하는 BluePin 마커 모양.
+                        marker.setSelectedMarkerType(MapPOIItem.MarkerType.BluePin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+                        mapView.addPOIItem(marker);
+
+                        mapView.setCalloutBalloonAdapter(new DialogAdapter());
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+        }
+    }
+
+
+
+
+
 
     private void circle_OpenChat() {
         database.getReference().child("openchat").addValueEventListener(new ValueEventListener() {
