@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.click_up_final">
+    package="com.example.click_up">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -19,58 +19,58 @@
         android:networkSecurityConfig="@xml/network_security_config"
         >
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.click_up.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name="com.example.click_up.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".FriendChatActivity"
+            android:name="com.example.click_up.FriendChatActivity"
             android:exported="false" />
         <activity
-            android:name=".OpenChatMakeActivity"
+            android:name="com.example.click_up.OpenChatMakeActivity"
             android:exported="false" />
         <activity
-            android:name=".ReportActivity"
+            android:name="com.example.click_up.ReportActivity"
             android:exported="false" />
         <activity
-            android:name=".SettingActivity"
+            android:name="com.example.click_up.SettingActivity"
             android:exported="false" />
         <activity
-            android:name=".FriendInfoActivity"
+            android:name="com.example.click_up.FriendInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".ChatActivity"
+            android:name="com.example.click_up.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".OpenChatActivity"
+            android:name="com.example.click_up.OpenChatActivity"
             android:exported="false" />
         <activity
-            android:name=".UserProfileChangeActivity"
+            android:name="com.example.click_up.UserProfileChangeActivity"
             android:exported="false" />
         <activity
-            android:name=".PostActivity"
+            android:name="com.example.click_up.PostActivity"
             android:exported="false" />
         <activity
-            android:name=".WriteActivity"
+            android:name="com.example.click_up.WriteActivity"
             android:exported="false" />
         <activity
-            android:name=".FootprintActivity"
+            android:name="com.example.click_up.FootprintActivity"
             android:exported="false" />
         <activity
-            android:name=".RequestFriendActivity"
+            android:name="com.example.click_up.RequestFriendActivity"
             android:exported="false" />
         <activity
-            android:name=".PasswordResetActivity"
+            android:name="com.example.click_up.PasswordResetActivity"
             android:exported="false" />
         <activity
-            android:name=".MyFriendActivity"
+            android:name="com.example.click_up.MyFriendActivity"
             android:exported="false" />
-        <activity android:name=".PostMapActivity"
+        <activity android:name="com.example.click_up.PostMapActivity"
             android:theme="@android:style/Theme.Dialog"
             android:exported="false"/>
         <activity
-            android:name=".LoginActivity"
+            android:name="com.example.click_up.LoginActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -83,7 +83,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.click_up_final.fileprovider"
+            android:authorities="com.example.click_up.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -92,7 +92,7 @@
         </provider>
 
         <service
-            android:name=".MainActivity"
+            android:name="com.example.click_up.MainActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
