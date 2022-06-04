@@ -80,7 +80,6 @@ public class HomeFragment extends Fragment {
 
 
     List<String> friend_list = new ArrayList<>();
-            //Arrays.asList("J6q8wonh4eQfk2YQdAy9oceuYPy2", "6Zo3bLu4mwRogGcEF7RAI3AeEYv1", "zGZEKcSs07ZAepGK5Tblo4Toe0Z2"));
 
 
     @Override
