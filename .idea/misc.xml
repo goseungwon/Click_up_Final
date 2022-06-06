@@ -7,6 +7,7 @@
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/drawable/frame_loading.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/drawable/ic_seachimg.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/drawable/icon_accept.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/drawable/icon_search.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/drawable/loginbutton.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/drawable/round_dialog.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/activity_chatroom.xml" value="0.17572463768115942" />
@@ -22,7 +23,7 @@
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/dialog_custom.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/fragment_everychatlist.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/fragment_friend.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/fragment_home.xml" value="0.17572463768115942" />
+        <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/fragment_myinfo.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/item_chat_left.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/item_chat_right.xml" value="0.25364583333333335" />
