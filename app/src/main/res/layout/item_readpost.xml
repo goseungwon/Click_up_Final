@@ -89,7 +89,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
             android:background="#FFFFFF"
-            android:src="@drawable/share_loaction" />
+            android:src="@drawable/share_location" />
 
         <EditText
             android:id="@+id/edt_inputComment"
