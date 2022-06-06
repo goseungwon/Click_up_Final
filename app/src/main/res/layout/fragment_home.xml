@@ -21,6 +21,14 @@
             android:src="@drawable/clickup" />
 
         <ImageView
+            android:id="@+id/img_location"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/my_loc" />
+
+        <ImageView
             android:id="@+id/img_make_openchat"
             android:layout_width="30dp"
             android:layout_height="wrap_content"

@@ -9,9 +9,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,9 +25,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.click_up.LoginActivity;
 import com.example.click_up.Model.ChatroomModel;
@@ -51,14 +55,16 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class HomeFragment extends Fragment {
-    private ImageView img_make_openchat, img_make_post;
+    private ImageView img_make_openchat, img_make_post, img_location;
 
     private FirebaseDatabase database;
     private FirebaseAuth firebaseAuth;
+    private String uid;
 
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
@@ -66,28 +72,21 @@ public class HomeFragment extends Fragment {
 
     public Double my_lati;
     public Double my_longi;
-
-    public String marker_nick;
-
     private MapView mapView;
     private MapPOIItem marker;
     private MapCircle circle;
     private Bitmap bitmap;
     private Dialog dialog;
-    private String uid;
-
-    public Double lat3, lon3;
-
-
     List<String> friend_list = new ArrayList<>();
-
+    private AppCompatDialog progressDialog;
 
     @Override
     public void onStart() {
         super.onStart();
         get_friend();
-        Log.d("거리 M단위", String.valueOf(distance(37.560959, 127.193786, 37.564769, 127.192161))+ "M");
     }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_home, container, false);
@@ -100,18 +99,33 @@ public class HomeFragment extends Fragment {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_custom);
 
+
+        progressDialog = new AppCompatDialog(getActivity());
+        progressDialog.setCancelable(false);
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        progressDialog.setContentView(R.layout.loading);
+
+
+        final ImageView img_loading_frame = (ImageView) progressDialog.findViewById(R.id.iv_frame_loading);
+        final AnimationDrawable frameAnimation = (AnimationDrawable) img_loading_frame.getBackground();
+        img_loading_frame.post(new Runnable() {
+            @Override
+            public void run() {
+                frameAnimation.start();
+            }
+        });
+
+
         if (firebaseAuth.getCurrentUser() == null) {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
         }
 
-        //circle_OpenChat();
-
         mapView = new MapView(getActivity());
         ViewGroup mapViewContainer = (ViewGroup) v.findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
 
-
+        everyChat();
 
         if (!checkLocationServiceStatus()) {
             showDialogForLocationServiceSetting();
@@ -122,8 +136,7 @@ public class HomeFragment extends Fragment {
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
         mapView.setShowCurrentLocationMarker(false);
 
-        /*
-        Timer timer = new Timer();
+    /*    Timer timer = new Timer();
 
         TimerTask Trkoff = new TimerTask() {
             @Override
@@ -142,14 +155,15 @@ public class HomeFragment extends Fragment {
         timer.schedule(Trkon, 1000, 1000 * 60 * 5);
 
         mapView.setShowCurrentLocationMarker(false);
-
-         */
+*/
 
         img_make_openchat = (ImageView) v.findViewById(R.id.img_make_openchat);
         img_make_post = (ImageView) v.findViewById(R.id.img_make_post);
+        img_location = (ImageView) v.findViewById(R.id.img_location);
 
         v.findViewById(R.id.img_make_post).setOnClickListener(onClickListener);
         v.findViewById(R.id.img_make_openchat).setOnClickListener(onClickListener);
+        v.findViewById(R.id.img_location).setOnClickListener(onClickListener);
 
         return v;
     }
@@ -164,6 +178,10 @@ public class HomeFragment extends Fragment {
 
                 case R.id.img_make_openchat:
                     makeChat();
+                    break;
+
+                case R.id.img_location:
+                    save_loc();
                     break;
             }
         }
@@ -295,73 +313,121 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    void save_loc() {
 
-    /**
-     * 거리 계산 메서드
-     *
-     * @param lat1 지점 1 위도
-     * @param lon1 지점 1 경도
-     * @param lat2 지점 2 위도
-     * @param lon2 지점 2 경도
-     * @return
-     */
-    private static double distance(double lat1, double lon1, double lat2, double lon2) {
+        Button yesbtn = dialog.findViewById(R.id.btn_yes);
+        Button nobtn = dialog.findViewById(R.id.btn_no);
+        TextView text_dialog = dialog.findViewById(R.id.text_dialog);
 
-        double theta = lon1 - lon2;
-        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        text_dialog.setText("근처 Every Chat을 찾습니다.");
+        dialog.show();
 
-        dist = Math.acos(dist);
-        dist = rad2deg(dist);
-        dist = dist * 60 * 1.1515 * 1609.344;
-
-
-
-        return (dist);
-    }
-
-
-    // This function converts decimal degrees to radians
-    private static double deg2rad(double deg) {
-        return (deg * Math.PI / 180.0);
-    }
-
-    // This function converts radians to decimal degrees
-    private static double rad2deg(double rad) {
-        return (rad * 180 / Math.PI);
-    }
-
-    private void marker_Post() {
-        database.getReference().child("posts").child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        yesbtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot item : snapshot.getChildren()) {
-                    WriteDTO writeDTO = item.getValue(WriteDTO.class);
+            public void onClick(View view) {
+                dialog.dismiss();
+                progressDialog.show();
+                mapView.setCurrentLocationEventListener(new MapView.CurrentLocationEventListener() {
+                    @Override
+                    public void onCurrentLocationUpdate(MapView mapView, MapPoint mapPoint, float v) {
+                        Bundle bundle = new Bundle();
+                        EveryChatFragment every = new EveryChatFragment();
 
-                    Double lat_ = Double.parseDouble(writeDTO.latitude);
-                    Double long_ = Double.parseDouble(writeDTO.longigude);
-                    String nick = writeDTO.userid;
-                    String url = writeDTO.imageURL;
+                        bundle.putDouble("m_latitude",  mapPoint.getMapPointGeoCoord().latitude);
+                        bundle.putDouble("m_longitude", mapPoint.getMapPointGeoCoord().longitude);
+                        every.setArguments(bundle);
 
-                    marker = new MapPOIItem();
-                    marker.setItemName(url);
-                    marker.setUserObject(nick);
-                    marker.setTag(0);
-                    marker.setMapPoint(MapPoint.mapPointWithGeoCoord(lat_, long_));
-                    marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
-                    marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-                    mapView.addPOIItem(marker);
+                        progressDialog.dismiss();
+                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.linear01, every);
+                        transaction.commit();
 
-                    mapView.setCalloutBalloonAdapter(new DialogAdapter());
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                    }
+
+                    @Override
+                    public void onCurrentLocationDeviceHeadingUpdate(MapView mapView, float v) {
+                    }
+
+                    @Override
+                    public void onCurrentLocationUpdateFailed(MapView mapView) {
+                    }
+
+                    @Override
+                    public void onCurrentLocationUpdateCancelled(MapView mapView) {
+                    }
+                });
             }
         });
+
+        nobtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        //Toast.makeText(getActivity(), "지도를 움직이세요.", Toast.LENGTH_SHORT).show();
+
+        /*
+        mapView.setMapViewEventListener(new MapView.MapViewEventListener() {
+            @Override
+            public void onMapViewInitialized(MapView mapView) {
+
+            }
+
+            @Override
+            public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapPoint) {
+                Bundle bundle = new Bundle();
+                EveryChatFrgment every = new EveryChatFrgment();
+
+                bundle.putDouble("m_latitude", mapPoint.getMapPointGeoCoord().latitude);
+                bundle.putDouble("m_longitude", mapPoint.getMapPointGeoCoord().longitude);
+                every.setArguments(bundle);
+
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.linear01, every);
+                transaction.commit();
+            }
+
+            @Override
+            public void onMapViewZoomLevelChanged(MapView mapView, int i) {
+
+            }
+
+            @Override
+            public void onMapViewSingleTapped(MapView mapView, MapPoint mapPoint) {
+
+            }
+
+            @Override
+            public void onMapViewDoubleTapped(MapView mapView, MapPoint mapPoint) {
+
+            }
+
+            @Override
+            public void onMapViewLongPressed(MapView mapView, MapPoint mapPoint) {
+
+            }
+
+            @Override
+            public void onMapViewDragStarted(MapView mapView, MapPoint mapPoint) {
+
+            }
+
+            @Override
+            public void onMapViewDragEnded(MapView mapView, MapPoint mapPoint) {
+
+            }
+
+            @Override
+            public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
+
+            }
+        });
+
+         */
     }
-
-
 
     private void get_friend() {
         database.getReference("friends_").child(uid)
@@ -400,10 +466,11 @@ public class HomeFragment extends Fragment {
                         marker = new MapPOIItem();
                         marker.setItemName(url);
                         marker.setUserObject(nick);
-                        marker.setTag(0);
+                        marker.setTag(2);
                         marker.setMapPoint(MapPoint.mapPointWithGeoCoord(lat,lon));
-                        marker.setMarkerType(MapPOIItem.MarkerType.RedPin);
-                        marker.setSelectedMarkerType(MapPOIItem.MarkerType.BluePin);
+                        marker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+                        marker.setCustomImageResourceId(R.drawable.custom_pin1);
+                        marker.setCustomImageAutoscale(true);
                         mapView.addPOIItem(marker);
 
                         mapView.setCalloutBalloonAdapter(new DialogAdapter());
@@ -419,30 +486,58 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    private void marker_Post() {
+        database.getReference().child("posts").child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot item : snapshot.getChildren()) {
+                    WriteDTO writeDTO = item.getValue(WriteDTO.class);
 
+                    Double lat_ = Double.parseDouble(writeDTO.latitude);
+                    Double long_ = Double.parseDouble(writeDTO.longigude);
+                    String nick = writeDTO.userid;
+                    String url = writeDTO.imageURL;
 
+                    marker = new MapPOIItem();
+                    marker.setItemName(url);
+                    marker.setUserObject(nick);
+                    marker.setTag(1);
+                    marker.setMapPoint(MapPoint.mapPointWithGeoCoord(lat_, long_));
+                    marker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+                    marker.setCustomImageResourceId(R.drawable.custom_pin2);
+                    marker.setCustomImageAutoscale(true);
+                    mapView.addPOIItem(marker);
 
+                    mapView.setCalloutBalloonAdapter(new DialogAdapter());
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
 
-    private void circle_OpenChat() {
-        database.getReference().child("openchat").addValueEventListener(new ValueEventListener() {
+    private void everyChat() {
+        database.getReference().child("every_chat").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot item : snapshot.getChildren()) {
                     ChatroomModel chatroomModel = item.getValue(ChatroomModel.class);
 
-                    Double lat1 = Double.parseDouble(chatroomModel.openChat_latitude);
-                    Double lon1 = Double.parseDouble(chatroomModel.openChat_longitude);
+                    Double lat = Double.parseDouble(chatroomModel.openChat_latitude);
+                    Double lon = Double.parseDouble(chatroomModel.openChat_longitude);
 
-                    circle = new MapCircle(
-                            MapPoint.mapPointWithGeoCoord(lat1, lon1), // center
-                            200, //
-                            Color.argb(128, 255, 0, 0),
-                            Color.argb(128, 200, 200, 0)
-                    );
-                    circle.setTag(1234);
+                    String title = chatroomModel.openChat_Title;
 
-                    mapView.addCircle(circle);
+                    marker = new MapPOIItem();
+                    marker.setItemName(title);
+                    marker.setTag(3);
+                    marker.setMapPoint(MapPoint.mapPointWithGeoCoord(lat, lon));
+                    marker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+                    marker.setCustomImageResourceId(R.drawable.everychat_pin);
+                    marker.setCustomImageAutoscale(true);
+                    mapView.addPOIItem(marker);
                 }
             }
 
@@ -520,11 +615,7 @@ public class HomeFragment extends Fragment {
 
 
     class DialogAdapter implements CalloutBalloonAdapter {
-        private View dialog;
-
-        public DialogAdapter() {
-            dialog = getLayoutInflater().inflate(R.layout.item_dialog, null);
-        }
+        private View dialog = getLayoutInflater().inflate(R.layout.item_dialog, null);
 
         @Override
         public View getCalloutBalloon(MapPOIItem mapPOIItem) {
@@ -543,9 +634,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-
-
-
     public Bitmap getBitmap(String imgPath) {
         Thread imgThread = new Thread() {
             @Override
@@ -559,7 +647,6 @@ public class HomeFragment extends Fragment {
                     bitmap = BitmapFactory.decodeStream(is);
                 } catch (IOException e) {
                     Log.d("비트맵 변환 스레드", e.toString());
-
                 }
             }
         };

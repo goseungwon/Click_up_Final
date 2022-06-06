@@ -19,12 +19,60 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="600dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="12dp"
         android:background="#FFFFFF"
         android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@color/white"
+            android:text="  계정"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/setting_logout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:backgroundTint="#F8DADA"
+            android:gravity="left|center"
+            android:paddingLeft="30dp"
+            android:text="로그아웃"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnUserInfoChange"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:backgroundTint="#E0E0E0"
+            android:gravity="left|center"
+            android:text="  프로필 변경"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnUsersFriend"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:backgroundTint="#E0E0E0"
+            android:gravity="left|center"
+            android:paddingLeft="30dp"
+            android:text="친구 관리"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/friend_request"
@@ -39,6 +87,24 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="12dp"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@color/white"
+            android:text="  기타"
+            android:textColor="@color/black" />
 
         <Button
             android:id="@+id/ask_btn"
@@ -69,16 +135,5 @@
             android:textStyle="bold" />
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/setting_logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="15dp"
-        android:background="@drawable/loginbutton"
-        android:backgroundTint="#808080"
-        android:text="로그아웃" />
 
 </LinearLayout>

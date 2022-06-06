@@ -292,11 +292,9 @@ public class PostActivity extends AppCompatActivity {
             public ImageView post_imageView, post_like;
             private ImageButton post_location;
             private String post_imageURL;
-
             private LinearLayout linear_post_comment;
             private EditText edt_comment;
             private Button btn_comment_send;
-
             public Toolbar post_toolbar;
 
             public CustomViewHolder(View view) {
@@ -305,13 +303,10 @@ public class PostActivity extends AppCompatActivity {
                 this.post_nick = view.findViewById(R.id.post_read_nick);
                 this.post_time = view.findViewById(R.id.post_read_time);
                 this.post_imageView = view.findViewById(R.id.post_read_imageView);
-
                 this.post_like = (ImageView) view.findViewById(R.id.post_read_like);
                 this.post_location = view.findViewById(R.id.post_read_loaction);
-
                 this.edt_comment = view.findViewById(R.id.edt_inputComment);
                 this.btn_comment_send = view.findViewById(R.id.btn_comment_send);
-
                 post_toolbar = (Toolbar) view.findViewById(R.id.post_toolbar);
             }
         }

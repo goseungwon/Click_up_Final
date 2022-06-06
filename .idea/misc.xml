@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/drawable/baseline_close_18.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/drawable/frame_loading.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/drawable/ic_seachimg.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/drawable/icon_accept.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/drawable/loginbutton.xml" value="0.26979166666666665" />
@@ -12,12 +13,14 @@
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/activity_footprint.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/activity_friendinfo.xml" value="0.17572463768115942" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/activity_login.xml" value="0.17255434782608695" />
+        <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/activity_main.xml" value="0.18704710144927536" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/activity_myfriend.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/activity_post.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/activity_register.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/activity_requestfriend.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/activity_userinfochange.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/dialog_custom.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/fragment_everychatlist.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/fragment_friend.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/fragment_home.xml" value="0.17572463768115942" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/fragment_myinfo.xml" value="0.25364583333333335" />
@@ -31,6 +34,7 @@
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/item_readfriend.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/item_readpost.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/item_requestfriend.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/loading.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/postmap.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/toolbar.xml" value="0.25364583333333335" />
       </map>

@@ -1,13 +1,12 @@
 package com.example.click_up.Fragment;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,13 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.example.click_up.Model.FriendDTO;
 import com.example.click_up.Model.UserModel;
 import com.example.click_up.Model.WriteDTO;
-import com.example.click_up.MyFriendActivity;
 import com.example.click_up.PostActivity;
 import com.example.click_up.R;
 import com.example.click_up.SettingActivity;
-import com.example.click_up.UserProfileChangeActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -44,8 +42,9 @@ public class MyinfoFragment extends Fragment {
     private ViewGroup rootView;
     private RecyclerView recyclerView;
     private CircleImageView profileImage;
-    private TextView tvuserNickname, userComment;
-    private Button btnUserInfoChange, btnUsersFriend, btnUserSetting;
+    private TextView tvuserNickname, userComment, tv_myfriend, tv_mypost, tv_myheart;
+    private ImageButton btnUserSetting;
+    private String uid;
 
     private List<WriteDTO> writeDTOs = new ArrayList<>();
     private List<String> uidLists = new ArrayList<>();
@@ -55,8 +54,25 @@ public class MyinfoFragment extends Fragment {
     private final int GALLERY_CODE = 10; // 갤러리 접근 코드
     private String imagePath;
     private FirebaseStorage storage;
-
     public RequestManager glideManager;
+
+    List<String> friend_list = new ArrayList<>();
+    List<String> post_list = new ArrayList<>();
+    List<Integer> heart_list = new ArrayList<Integer>();
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        friend_list.clear();
+        friend_count();
+
+        post_list.clear();
+        post_count();
+
+        heart_list.clear();
+        heart_count();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,6 +81,7 @@ public class MyinfoFragment extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
+        uid = firebaseAuth.getCurrentUser().getUid();
         String userUID = firebaseAuth.getCurrentUser().getUid();
 
         glideManager = Glide.with(getActivity());
@@ -73,14 +90,10 @@ public class MyinfoFragment extends Fragment {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.myinfo_PostRecyclerView);
         tvuserNickname = (TextView) rootView.findViewById(R.id.tvuserNickname);
         userComment = (TextView) rootView.findViewById(R.id.userComment);
-
-        btnUserInfoChange = (Button) rootView.findViewById(R.id.btnUserInfoChange);
-        btnUsersFriend = (Button) rootView.findViewById(R.id.btnUsersFriend);
-        btnUserSetting = (Button) rootView.findViewById(R.id.btnUserSetting);
-
-        btnUserInfoChange.setBackgroundColor(Color.rgb(220,220,220));
-        btnUsersFriend.setBackgroundColor(Color.rgb(220,220,220));
-        btnUserSetting.setBackgroundColor(Color.rgb(220,220,220));
+        btnUserSetting = (ImageButton) rootView.findViewById(R.id.btnUserSetting);
+        tv_myfriend = (TextView) rootView.findViewById(R.id.tv_myfriend);
+        tv_mypost = (TextView) rootView.findViewById(R.id.tv_mypost);
+        tv_myheart = (TextView) rootView.findViewById(R.id.tv_myheart);
 
         database = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -89,14 +102,14 @@ public class MyinfoFragment extends Fragment {
         PostRecyclerViewAdapter postRecyclerViewAdapter = new PostRecyclerViewAdapter();
         recyclerView.setAdapter(postRecyclerViewAdapter);
 
-        rootView.findViewById(R.id.btnUserInfoChange).setOnClickListener(onClickListener);
-        rootView.findViewById(R.id.btnUsersFriend).setOnClickListener(onClickListener);
         rootView.findViewById(R.id.btnUserSetting).setOnClickListener(onClickListener);
+
 
         database.getReference("users").child(userUID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UserModel userModel = snapshot.getValue(UserModel.class);
+
                 tvuserNickname.setText(userModel.userNickname);
                 userComment.setText(userModel.userComment);
 
@@ -137,16 +150,6 @@ public class MyinfoFragment extends Fragment {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.btnUserInfoChange:
-                    Intent intentInfo = new Intent(getActivity(), UserProfileChangeActivity.class);
-                    startActivity(intentInfo);
-                    break;
-
-                case R.id.btnUsersFriend:
-                    Intent intentFriend = new Intent(getActivity(), MyFriendActivity.class);
-                    startActivity(intentFriend);
-                    break;
-
                 case R.id.btnUserSetting:
                     Intent intentSetting = new Intent(getActivity(), SettingActivity.class);
                     startActivity(intentSetting);
@@ -154,6 +157,69 @@ public class MyinfoFragment extends Fragment {
             }
         }
     };
+
+    private void friend_count() {
+        database.getReference("friends_").child(uid)
+                .orderByChild("friends/" + uid).equalTo(true).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot item : snapshot.getChildren()) {
+                    FriendDTO friendDTO = item.getValue(FriendDTO.class);
+                    friend_list.add(friendDTO.uid);
+                }
+                tv_myfriend.setText(String.valueOf(friend_list.size()));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void post_count() {
+        database.getReference("posts").child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot item : snapshot.getChildren()) {
+                    WriteDTO writeDTO = item.getValue(WriteDTO.class);
+                    post_list.add(writeDTO.uid);
+                }
+                tv_mypost.setText(String.valueOf(post_list.size()));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void heart_count() {
+        database.getReference("posts").child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot item : snapshot.getChildren()) {
+                    WriteDTO writeDTO = item.getValue(WriteDTO.class);
+                    heart_list.add(writeDTO.likecount);
+                }
+
+                int sum = 0;
+                for (Integer integer : heart_list) {
+                    int intValue = integer.intValue();
+                    sum += intValue;
+                }
+
+                tv_myheart.setText(String.valueOf(sum));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 
     class PostRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

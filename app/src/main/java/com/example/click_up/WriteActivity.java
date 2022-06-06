@@ -18,9 +18,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 import androidx.loader.content.CursorLoader;
-import androidx.appcompat.widget.Toolbar;
 
 import com.example.click_up.Model.UserModel;
 import com.example.click_up.Model.WriteDTO;
@@ -75,6 +75,7 @@ public class WriteActivity extends AppCompatActivity {
 
         findViewById(R.id.UploadImg).setOnClickListener(onClickListener);
         findViewById(R.id.btnPost).setOnClickListener(onClickListener);
+
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener(){
@@ -96,7 +97,7 @@ public class WriteActivity extends AppCompatActivity {
         AlertDialog.Builder ad = new AlertDialog.Builder(this);
         ad.setTitle("사진 업로드");
 
-        ad.setItems(PhotoModels, new DialogInterface.OnClickListener() {
+        ad.setSingleChoiceItems(PhotoModels, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (i == 0 ){

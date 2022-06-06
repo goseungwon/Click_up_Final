@@ -30,10 +30,17 @@ import java.util.List;
 
 public class ChatSecondFragment extends Fragment {
     private ViewGroup rootView;
-
     private FirebaseAuth auth;
     private FirebaseDatabase database;
     private String uid;
+    private List<ChatroomModel> chatroomModels = new ArrayList<>();
+    List<String> friend_list = new ArrayList<>();
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        get_friend();
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(R.layout.fragment_chat_second, container, false);
@@ -49,21 +56,46 @@ public class ChatSecondFragment extends Fragment {
         return rootView;
     }
 
+    void get_friend() {
+
+        database.getReference("friends_").child(uid)
+                .orderByChild("friends/" + uid).equalTo(true).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot item : snapshot.getChildren()) {
+                    FriendDTO friendDTO = item.getValue(FriendDTO.class);
+                    friend_list.add(friendDTO.uid);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     class ChatSecondAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-        private List<ChatroomModel> chatroomModels = new ArrayList<>();
-        private List<FriendDTO> friendDTOList = new ArrayList<>();
         private String makeuserUID, roomTitle;
 
         public ChatSecondAdapter() {
             database.getReference("friend_chat").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                     chatroomModels.clear();
 
                     for (DataSnapshot item : snapshot.getChildren()) {
-                        chatroomModels.add(item.getValue(ChatroomModel.class));
-                    }
+                        ChatroomModel chatroomModel = item.getValue(ChatroomModel.class);
 
+                        if (friend_list.contains(chatroomModel.makeUserUID)) {
+                            chatroomModels.add(chatroomModel);
+                        }
+
+                        if (chatroomModel.makeUserUID.contains(uid)) {
+                            chatroomModels.add(chatroomModel);
+                        }
+                    }
                     notifyDataSetChanged();
                 }
 
@@ -114,7 +146,6 @@ public class ChatSecondFragment extends Fragment {
                 friendchat_title = (TextView) view.findViewById(R.id.everychat_title);
                 friendchat_memo = (TextView) view.findViewById(R.id.everychat_memo);
                 friendchat_hashtag = (TextView) view.findViewById(R.id.everychat_hashtag);
-
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override

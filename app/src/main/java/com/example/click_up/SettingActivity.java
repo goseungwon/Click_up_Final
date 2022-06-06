@@ -1,12 +1,13 @@
 package com.example.click_up;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -17,8 +18,9 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class SettingActivity extends AppCompatActivity {
     private FirebaseAuth auth;
-    private Button setting_logout, friend_request, password_reset, ask_btn;
+    private Button btnUserInfoChange, btnUsersFriend, setting_logout, friend_request, password_reset, ask_btn;
     private Toolbar toolbar;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,10 +28,16 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
 
         auth = FirebaseAuth.getInstance();
+        btnUserInfoChange = (Button) findViewById(R.id.btnUserInfoChange);
+        btnUsersFriend = (Button) findViewById(R.id.btnUsersFriend);
         setting_logout = (Button) findViewById(R.id.setting_logout);
         friend_request = (Button) findViewById(R.id.friend_request);
         password_reset = (Button) findViewById(R.id.password_reset);
         ask_btn = (Button) findViewById(R.id.ask_btn);
+
+        dialog = new Dialog(SettingActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_custom);
 
         toolbar = (Toolbar) findViewById(R.id.set_toolbar);
         setSupportActionBar(toolbar);
@@ -39,6 +47,8 @@ public class SettingActivity extends AppCompatActivity {
         findViewById(R.id.setting_logout).setOnClickListener(onClickListener);
         findViewById(R.id.friend_request).setOnClickListener(onClickListener);
         findViewById(R.id.password_reset).setOnClickListener(onClickListener);
+        findViewById(R.id.btnUserInfoChange).setOnClickListener(onClickListener);
+        findViewById(R.id.btnUsersFriend).setOnClickListener(onClickListener);
         findViewById(R.id.ask_btn).setOnClickListener(onClickListener);
     }
 
@@ -46,6 +56,16 @@ public class SettingActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
+                case R.id.btnUserInfoChange:
+                    Intent intentInfo = new Intent(SettingActivity.this, UserProfileChangeActivity.class);
+                    startActivity(intentInfo);
+                    break;
+
+                case R.id.btnUsersFriend:
+                    Intent intentFriend = new Intent(SettingActivity.this, MyFriendActivity.class);
+                    startActivity(intentFriend);
+                    break;
+
                 case R.id.setting_logout:
                     logout();
                     break;
@@ -76,27 +96,31 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     void logout() {
-        AlertDialog.Builder ad = new AlertDialog.Builder(SettingActivity.this);
-        ad.setTitle("Click Up");
-        ad.setMessage("로그아웃 하시겠습니까?");
+        Button yesbtn = dialog.findViewById(R.id.btn_yes);
+        Button nobtn = dialog.findViewById(R.id.btn_no);
+        TextView text_dialog = dialog.findViewById(R.id.text_dialog);
 
-        ad.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        text_dialog.setText("App에서 로그아웃합니다");
+        dialog.show();
+
+        yesbtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(View view) {
                 auth.signOut();
+                dialog.dismiss();
                 finish();
                 Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
                 Toast.makeText(SettingActivity.this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
             }
         });
-        ad.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+        nobtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
+            public void onClick(View view) {
+                dialog.dismiss();
             }
         });
-        ad.show();
     }
 
     void request() {

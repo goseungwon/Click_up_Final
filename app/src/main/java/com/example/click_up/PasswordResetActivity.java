@@ -31,12 +31,13 @@ public class PasswordResetActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passwordreset);
 
+        auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+
         tv_email = (TextView) findViewById(R.id.tv_emailcheck);
         btn_email = (Button) findViewById(R.id.btnReset);
         tv_email.setText(auth.getCurrentUser().getEmail());
 
-        auth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
 
         toolbar = (Toolbar) findViewById(R.id.mail_toolbar);
         setSupportActionBar(toolbar);

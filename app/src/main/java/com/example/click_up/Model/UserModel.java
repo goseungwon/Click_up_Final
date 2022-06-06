@@ -10,6 +10,7 @@ public class UserModel {
     public String userprofileImageURL;
     public String userComment;
     public String pushtoken;
+    public int postN;
 
     public Map<String, Boolean> friends = new HashMap<>();
 

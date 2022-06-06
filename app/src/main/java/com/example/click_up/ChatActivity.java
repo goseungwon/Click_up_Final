@@ -34,9 +34,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ChatActivity extends AppCompatActivity {
     private String destinationUid;
@@ -164,32 +162,13 @@ public class ChatActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     comments.clear();
-                    Map<String, Object> readUsersMap = new HashMap<>();
 
                     for (DataSnapshot item : dataSnapshot.getChildren()) {
-                        String key = item.getKey();
-                        ChatModel.Comment comment_origin = item.getValue(ChatModel.Comment.class);
-                        ChatModel.Comment comment_read = item.getValue(ChatModel.Comment.class);
-                        comment_read.readUsers.put(uid, true);
-
-                        readUsersMap.put(key, comment_read);
-                        comments.add(comment_origin);
+                        ChatModel.Comment comment = item.getValue(ChatModel.Comment.class);
+                        comments.add(comment);
                     }
-
-                    if (comments.get(comments.size() - 1).readUsers.containsKey(uid)) {
-
-                        database.getReference().child("chatrooms").child(chatRoomUid).child("comments")
-                                .updateChildren(readUsersMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                notifyDataSetChanged();
-                                recyclerView_chatting.scrollToPosition(comments.size() - 1);
-                            }
-                        });
-                    } else {
-                        notifyDataSetChanged();
-                        recyclerView_chatting.scrollToPosition(comments.size() - 1);
-                    }
+                    notifyDataSetChanged();
+                    recyclerView_chatting.scrollToPosition(comments.size() - 1);
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {

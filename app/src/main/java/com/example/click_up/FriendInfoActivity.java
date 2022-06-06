@@ -66,6 +66,7 @@ public class FriendInfoActivity extends AppCompatActivity {
         btn_add_friend = (Button) findViewById(R.id.btn_add_friend);
         btn_footprint = (Button) findViewById(R.id.btn_footprint);
 
+        findViewById(R.id.btn_add_friend).setOnClickListener(onClickListener);
         findViewById(R.id.btn_chatting_with_user).setOnClickListener(onClickListener);
         findViewById(R.id.btn_footprint).setOnClickListener(onClickListener);
 
@@ -129,6 +130,11 @@ public class FriendInfoActivity extends AppCompatActivity {
                 case R.id.btn_chatting_with_user:
                     goChat();
                     break;
+
+                case R.id.btn_add_friend:
+                    addFriend();
+                    break;
+
                 case R.id.btn_footprint:
                     footprint();
                     break;
@@ -155,6 +161,8 @@ public class FriendInfoActivity extends AppCompatActivity {
         yesbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 database.getReference().child("users").child(uid).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -213,20 +221,7 @@ public class FriendInfoActivity extends AppCompatActivity {
                             btn_add_friend.setText("√  친구");
                             btn_add_friend.setBackgroundColor(Color.rgb(255, 217, 250));
                             btn_add_friend.setTextColor(Color.rgb(181, 29, 161));
-
-                            btn_add_friend.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Toast.makeText(FriendInfoActivity.this, "친구 관계입니다.", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        } else {
-                            btn_add_friend.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    addFriend();
-                                }
-                            });
+                            btn_add_friend.setClickable(false);
                         }
                     }
                 }
