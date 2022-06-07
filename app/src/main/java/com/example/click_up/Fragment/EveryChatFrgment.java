@@ -2,10 +2,11 @@ package com.example.click_up.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,8 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.click_up.BaseActivity;
-import com.example.click_up.BaseApplication;
 import com.example.click_up.Model.ChatroomModel;
 import com.example.click_up.OpenChatActivity;
 import com.example.click_up.R;
@@ -31,11 +30,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EveryChatFragment extends Fragment {
+public class EveryChatFrgment extends Fragment {
     private ViewGroup v;
     private FirebaseAuth auth;
     private FirebaseDatabase database;
 
+    private EditText edtSearch;
+    private ImageButton btnSearch;
+    String inputText;
 
     @Override
     public void onStart() {
@@ -50,6 +52,9 @@ public class EveryChatFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
+        edtSearch = (EditText) v.findViewById(R.id.edtSearchEverychat);
+        btnSearch = (ImageButton) v.findViewById(R.id.btnSearchEverychat);
+
         RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.chat_every_recylerview);
         recyclerView.setAdapter(new ChatAdapter());
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
@@ -60,7 +65,8 @@ public class EveryChatFragment extends Fragment {
     private static double distance(double lat1, double lon1, double lat2, double lon2) {
 
         double theta = lon1 - lon2;
-        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1))
+                * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
 
         dist = Math.acos(dist);
         dist = rad2deg(dist);
@@ -77,8 +83,6 @@ public class EveryChatFragment extends Fragment {
         return (rad * 180 / Math.PI);
     }
 
-
-
     private class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private List<ChatroomModel> chatroomModels = new ArrayList<>();
         private String makeuserUID, roomTitle;
@@ -90,9 +94,32 @@ public class EveryChatFragment extends Fragment {
                 lon1 = getArguments().getDouble("m_longitude");
             }
 
+
             database.getReference().child("every_chat").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    btnSearch.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            inputText = edtSearch.getText().toString();;
+
+                            chatroomModels.clear();
+
+                            if (inputText.length() != 0) {
+
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    ChatroomModel chatroomModel = snapshot.getValue(ChatroomModel.class);
+
+                                    if (chatroomModel.hashTag.contains(inputText)) {
+                                        chatroomModels.add(chatroomModel);
+                                    }
+                                    notifyDataSetChanged();
+                                }
+                            }
+
+                        }
+                    });
+
                     chatroomModels.clear();
 
                     for (DataSnapshot item : dataSnapshot.getChildren()) {
@@ -100,23 +127,13 @@ public class EveryChatFragment extends Fragment {
 
                         lat2 = Double.parseDouble(chatroomModel.openChat_latitude);
                         lon2 = Double.parseDouble(chatroomModel.openChat_longitude);
-
                         dist_chat = distance(lat1, lon1, lat2, lon2);
 
                         int dist = Integer.parseInt(String.valueOf(Math.round(dist_chat)));
 
-                        if (dist<200){
+                        if (dist < 200) {
                             chatroomModels.add(chatroomModel);
                         }
-
-                        //Toast.makeText(getActivity(), dist_chat + "미터", Toast.LENGTH_SHORT).show();
-
-                        Log.d("거리", String.valueOf(lat1));
-                        Log.d("거리", String.valueOf(lon1));
-                        Log.d("거리", String.valueOf(lat2));
-                        Log.d("거리", String.valueOf(lon2));
-                        Log.d("거리계산", String.valueOf(dist_chat));
-
                     }
                     notifyDataSetChanged();
                 }

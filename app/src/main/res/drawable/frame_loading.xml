@@ -21,5 +21,4 @@
     <item android:drawable="@drawable/frame_loading_19" android:duration="30"/>
     <item android:drawable="@drawable/frame_loading_20" android:duration="30"/>
     <item android:drawable="@drawable/frame_loading_21" android:duration="30"/>
-
 </animation-list>

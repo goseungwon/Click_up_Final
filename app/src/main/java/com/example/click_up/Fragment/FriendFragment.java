@@ -34,15 +34,12 @@ public class FriendFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ViewGroup view;
-
+    private FirebaseAuth auth;
+    private FirebaseDatabase database;
     private List<UserModel> userModelList = new ArrayList<>();
 
     private EditText edtSearchUser;
     private ImageButton btnSearch;
-
-    private FirebaseAuth auth;
-    private FirebaseDatabase database;
-
     String searchName;
 
     @Override

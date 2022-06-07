@@ -23,6 +23,42 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <LinearLayout
+        android:id="@+id/Layout_for_chatSearch"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bordery"
+        android:backgroundTint="#EFEEEE"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edtSearchEverychat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="6dp"
+            android:layout_weight="1"
+            android:background="#EFEEEE"
+            android:hint="   검색"
+            android:inputType="text"
+            android:textColor="@color/search"
+            android:textColorHint="@color/search"
+            android:textSize="14dp" />
+
+        <ImageButton
+            android:id="@+id/btnSearchEverychat"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:backgroundTint="#EFEEEE"
+            android:src="@drawable/icon_search"
+            android:textSize="13dp"
+            app:tint="@color/search" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chat_every_recylerview"
         android:layout_width="match_parent"

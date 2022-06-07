@@ -13,7 +13,6 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +44,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import net.daum.mf.map.api.CalloutBalloonAdapter;
-import net.daum.mf.map.api.MapCircle;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
@@ -56,8 +54,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class HomeFragment extends Fragment {
     private ImageView img_make_openchat, img_make_post, img_location;
@@ -74,7 +70,6 @@ public class HomeFragment extends Fragment {
     public Double my_longi;
     private MapView mapView;
     private MapPOIItem marker;
-    private MapCircle circle;
     private Bitmap bitmap;
     private Dialog dialog;
     List<String> friend_list = new ArrayList<>();
@@ -99,12 +94,10 @@ public class HomeFragment extends Fragment {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_custom);
 
-
         progressDialog = new AppCompatDialog(getActivity());
         progressDialog.setCancelable(false);
         progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         progressDialog.setContentView(R.layout.loading);
-
 
         final ImageView img_loading_frame = (ImageView) progressDialog.findViewById(R.id.iv_frame_loading);
         final AnimationDrawable frameAnimation = (AnimationDrawable) img_loading_frame.getBackground();
@@ -136,7 +129,8 @@ public class HomeFragment extends Fragment {
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
         mapView.setShowCurrentLocationMarker(false);
 
-    /*    Timer timer = new Timer();
+        /*
+        Timer timer = new Timer();
 
         TimerTask Trkoff = new TimerTask() {
             @Override
@@ -155,7 +149,8 @@ public class HomeFragment extends Fragment {
         timer.schedule(Trkon, 1000, 1000 * 60 * 5);
 
         mapView.setShowCurrentLocationMarker(false);
-*/
+
+         */
 
         img_make_openchat = (ImageView) v.findViewById(R.id.img_make_openchat);
         img_make_post = (ImageView) v.findViewById(R.id.img_make_post);
@@ -275,14 +270,15 @@ public class HomeFragment extends Fragment {
         yesbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dialog.dismiss();
+                progressDialog.show();
+
                 mapView.setCurrentLocationEventListener(new MapView.CurrentLocationEventListener() {
                     @Override
                     public void onCurrentLocationUpdate(MapView mapView, MapPoint mapPoint, float v) {
                         my_lati = mapPoint.getMapPointGeoCoord().latitude;
                         my_longi = mapPoint.getMapPointGeoCoord().longitude;
-
-                        Toast.makeText(getActivity(), "개설 화면으로 이동합니다.", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
+                        progressDialog.dismiss();
 
                         Intent intent = new Intent(getActivity(), OpenChatMakeActivity.class);
                         intent.putExtra("my_lati", my_lati);
@@ -314,7 +310,6 @@ public class HomeFragment extends Fragment {
     }
 
     void save_loc() {
-
         Button yesbtn = dialog.findViewById(R.id.btn_yes);
         Button nobtn = dialog.findViewById(R.id.btn_no);
         TextView text_dialog = dialog.findViewById(R.id.text_dialog);
@@ -327,11 +322,12 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 dialog.dismiss();
                 progressDialog.show();
+
                 mapView.setCurrentLocationEventListener(new MapView.CurrentLocationEventListener() {
                     @Override
                     public void onCurrentLocationUpdate(MapView mapView, MapPoint mapPoint, float v) {
                         Bundle bundle = new Bundle();
-                        EveryChatFragment every = new EveryChatFragment();
+                        EveryChatFrgment every = new EveryChatFrgment();
 
                         bundle.putDouble("m_latitude",  mapPoint.getMapPointGeoCoord().latitude);
                         bundle.putDouble("m_longitude", mapPoint.getMapPointGeoCoord().longitude);
@@ -341,7 +337,6 @@ public class HomeFragment extends Fragment {
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.linear01, every);
                         transaction.commit();
-
 
                     }
 
@@ -535,7 +530,7 @@ public class HomeFragment extends Fragment {
                     marker.setTag(3);
                     marker.setMapPoint(MapPoint.mapPointWithGeoCoord(lat, lon));
                     marker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
-                    marker.setCustomImageResourceId(R.drawable.everychat_pin);
+                    marker.setCustomImageResourceId(R.drawable.security_pin);
                     marker.setCustomImageAutoscale(true);
                     mapView.addPOIItem(marker);
                 }

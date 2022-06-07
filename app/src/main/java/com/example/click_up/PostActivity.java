@@ -120,7 +120,6 @@ public class PostActivity extends AppCompatActivity {
     }
 
     private void removePost() {
-        String key = getIntent().getStringExtra("key");
         String postuser_uid = getIntent().getStringExtra("post_uid");
 
         if (postuser_uid.contentEquals(uid)) {
