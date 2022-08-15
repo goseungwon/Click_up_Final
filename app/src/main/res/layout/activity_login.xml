@@ -39,7 +39,6 @@
             android:drawableLeft="@drawable/ic_baseline_person_24"
             android:hint="이메일"
             android:padding="10dp"
-            android:text="lee43999@naver.com"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF" />
 
@@ -55,7 +54,6 @@
             android:hint="비밀번호"
             android:inputType="textPassword"
             android:padding="10dp"
-            android:text="123456"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF" />
 
@@ -84,6 +82,17 @@
             android:textColor="#ffffff"
             android:textSize="20dp"
             android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="비밀번호 찾기"
+            android:textColor="#A364AE"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:id="@+id/mainPw"/>
+
 
     </LinearLayout>
 

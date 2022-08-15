@@ -69,6 +69,8 @@
         <activity android:name="com.example.click_up.PostMapActivity"
             android:theme="@android:style/Theme.Dialog"
             android:exported="false"/>
+        <activity android:name=".PasswordFindActivity"
+            android:exported="false"/>
         <activity
             android:name="com.example.click_up.LoginActivity"
             android:exported="true" >

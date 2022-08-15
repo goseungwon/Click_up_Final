@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,9 +19,15 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
+    private TextView mainPw;
     private EditText edtLoginID, edtLoginPassword;
     private Button btnMainRegister, btnMainLogin;
     private long time = 0;
+
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +38,9 @@ public class LoginActivity extends AppCompatActivity {
 
         edtLoginID = findViewById(R.id.edtLoginID);
         edtLoginPassword = findViewById(R.id.edtLoginPassword);
+        mainPw= findViewById(R.id.mainPw);
 
+        findViewById(R.id.mainPw).setOnClickListener(onClickListener);
         findViewById(R.id.btnMainRegister).setOnClickListener(onClickListener);
         findViewById(R.id.btnMainLogin).setOnClickListener(onClickListener);
     }
@@ -53,9 +62,18 @@ public class LoginActivity extends AppCompatActivity {
                 case R.id.btnMainLogin:
                     login();
                     break;
+
+                case R.id.mainPw:
+                    password();
+                    break;
             }
         }
     };
+
+    private void password() {
+        Intent intent = new Intent(LoginActivity.this, PasswordFindActivity.class);
+        startActivity(intent);
+    }
 
     private void login() {
         String userID = edtLoginID.getText().toString().trim();

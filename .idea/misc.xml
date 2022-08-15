@@ -13,9 +13,11 @@
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/activity_chatroom.xml" value="0.17572463768115942" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/activity_footprint.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/activity_friendinfo.xml" value="0.17572463768115942" />
-        <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/activity_login.xml" value="0.17255434782608695" />
+        <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/activity_login.xml" value="0.4" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/activity_main.xml" value="0.18704710144927536" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/activity_myfriend.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/activity_passwordfind.xml" value="0.5259515570934256" />
+        <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/activity_passwordreset.xml" value="0.4" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/activity_post.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/activity_register.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/activity_requestfriend.xml" value="0.25364583333333335" />
@@ -38,6 +40,9 @@
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/loading.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/postmap.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/layout/toolbar.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/menu/bottom_menu.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/menu/top_menu.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/knmy0/AndroidStudioProjects/Click_up_Final/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.26979166666666665" />
       </map>
     </option>
   </component>
