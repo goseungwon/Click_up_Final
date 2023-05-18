@@ -35,7 +35,7 @@
 
 사용자의 닉네임으로 검색하고, 사용자의 프로필을 보여줍니다.
 
-<p align="center"><img src="https://github.com/goseungwon/click_up/assets/85796588/9d9a10fa-8fd8-4181-a5db-6e1d827708f2"> </p>
+<p align="center"><img src="https://github.com/goseungwon/click_up/assets/85796588/9d9a10fa-8fd8-4181-a5db-6e1d827708f2" height="450px"> </p>
 
 
 ## 발자취
